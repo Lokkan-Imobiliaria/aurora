@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZapLivre — O menor preço no seu WhatsApp</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f2044;
+    --navy-light: #162a52;
+    --gold: #f0b429;
+    --gold-light: #fcd34d;
+    --gold-dark: #b8891f;
+    --white: #ffffff;
+    --gray: #a0aec0;
+    --green-wpp: #25d366;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 5%;
+    background: rgba(10,22,40,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(240,180,41,0.12);
+  }
+  .logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.4rem; font-weight: 800;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--white); }
+  nav a.cta-nav {
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Sora', sans-serif;
+    font-weight: 700; font-size: .85rem;
+    padding: 10px 20px; border-radius: 50px;
+    text-decoration: none;
+    transition: background .2s, transform .2s;
+  }
+  nav a.cta-nav:hover { background: var(--gold-light); transform: scale(1.03); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 110px 5% 80px;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, #162a52 0%, var(--navy) 70%);
+  }
+
+  /* gold glow lines */
+  #hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 40% 40% at 80% 30%, rgba(240,180,41,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 30% at 20% 80%, rgba(240,180,41,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    flex: 1;
+    max-width: 560px;
+    animation: fadeUp .8s ease both;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(240,180,41,0.12);
+    border: 1px solid rgba(240,180,41,0.3);
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: .78rem; font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 24px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+  .hero-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .hero-title span { color: var(--white); }
+  .hero-sub {
+    font-size: clamp(.95rem, 2vw, 1.1rem);
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 440px;
+  }
+  .hero-sub strong { color: var(--white); }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--green-wpp);
+    color: var(--white);
+    font-family: 'Sora', sans-serif;
+    font-weight: 700; font-size: 1rem;
+    padding: 16px 32px; border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(37,211,102,0.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(37,211,102,0.5); }
+  .btn-primary svg { width: 22px; height: 22px; }
+
+  /* mock phone */
+  .hero-phone {
+    flex: 1;
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+    animation: fadeUp .8s .2s ease both;
+  }
+  .phone-wrap {
+    position: relative;
+    width: 260px;
+  }
+  .phone-frame {
+    background: #111827;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow:
+      0 0 0 2px rgba(240,180,41,0.3),
+      0 30px 80px rgba(0,0,0,0.6),
+      0 0 60px rgba(240,180,41,0.08);
+  }
+  .phone-screen {
+    background: #ece5dd;
+    border-radius: 26px;
+    overflow: hidden;
+    min-height: 420px;
+    display: flex; flex-direction: column;
+  }
+  .wpp-header {
+    background: #075e54;
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .wpp-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .wpp-name { font-family: 'Sora', sans-serif; font-size: .8rem; font-weight: 700; color: #fff; }
+  .wpp-status { font-size: .68rem; color: rgba(255,255,255,0.7); }
+  .wpp-body { padding: 12px 10px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+
+  .bubble {
+    max-width: 85%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: .75rem;
+    line-height: 1.4;
+    position: relative;
+  }
+  .bubble.sent {
+    background: #dcf8c6;
+    color: #111;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .bubble.received {
+    background: #fff;
+    color: #111;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .comparison-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: .7rem;
+    color: #111;
+    align-self: flex-start;
+    max-width: 90%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .comparison-card .card-title {
+    font-weight: 700; color: #075e54; margin-bottom: 6px; font-size: .72rem;
+  }
+  .comparison-card .option {
+    padding: 4px 8px; border-radius: 6px; margin-bottom: 4px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .option.best { background: #e7f7ef; }
+  .option.alt  { background: #f0f0f0; }
+  .option .label { font-weight: 600; }
+  .option .price { font-weight: 700; color: #128c7e; }
+  .rec {
+    display: flex; align-items: center; gap: 4px;
+    margin-top: 6px; padding-top: 6px;
+    border-top: 1px solid #eee;
+    font-weight: 700; font-size: .7rem; color: #111;
+  }
+
+  /* floating logos */
+  .float-logo {
+    position: absolute;
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    animation: float 3s ease-in-out infinite;
+  }
+  .fl-ml { background: #fff; top: 10%; left: -20px; animation-delay: 0s; }
+  .fl-am { background: #fff; top: 10%; right: -20px; animation-delay: .7s; }
+  .fl-sh { background: #fff; bottom: 20%; right: -20px; animation-delay: 1.4s; }
+
+  /* ─── SECTION BASE ─── */
+  section {
+    padding: 90px 5%;
+  }
+  .section-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    color: var(--gold);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .section-title span { color: var(--white); }
+  .section-sub {
+    text-align: center;
+    color: var(--gray);
+    font-size: 1rem;
+    max-width: 520px;
+    margin: 0 auto 60px;
+    line-height: 1.7;
+  }
+
+  /* ─── FEATURES ─── */
+  #features {
+    background: var(--navy-mid);
+    position: relative;
+    overflow: hidden;
+  }
+  #features::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .feature-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(240,180,41,0.15);
+    border-radius: 20px;
+    padding: 32px 28px;
+    transition: border-color .3s, transform .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .feature-card:hover { border-color: rgba(240,180,41,0.4); transform: translateY(-4px); }
+  .feature-card:hover::after { opacity: 1; }
+  .feature-icon {
+    font-size: 2.2rem;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .feature-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .feature-desc {
+    color: var(--gray);
+    font-size: .9rem;
+    line-height: 1.7;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  #how {
+    background: var(--navy);
+    position: relative;
+  }
+
+  .steps-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* connector line (desktop) */
+  .steps-wrap::before {
+    content: '';
+    position: absolute;
+    top: 56px; left: calc(16.6% + 24px); right: calc(16.6% + 24px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    opacity: .4;
+  }
+
+  .step {
+    text-align: center;
+    position: relative;
+  }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Sora', sans-serif;
+    font-weight: 800; font-size: 1.3rem;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 24px rgba(240,180,41,0.4);
+    position: relative; z-index: 1;
+  }
+  .step-icon { font-size: 1.6rem; margin-bottom: 14px; }
+  .step h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--gold); margin-bottom: 10px;
+  }
+  .step p { color: var(--gray); font-size: .88rem; line-height: 1.6; }
+
+  /* Comparison card demo */
+  .demo-card {
+    max-width: 380px;
+    margin: 48px auto 0;
+    background: rgba(255,255,255,0.97);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .demo-card-header {
+    background: #075e54;
+    padding: 12px 18px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700; font-size: .9rem;
+    color: #fff;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .demo-card-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .demo-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .88rem; color: #333;
+  }
+  .demo-row .label { font-weight: 600; }
+  .demo-option {
+    padding: 10px 14px; border-radius: 10px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .88rem; color: #111;
+  }
+  .demo-option.best { background: #e7f7ef; border: 1.5px solid #25d366; }
+  .demo-option.alt  { background: #f5f5f5; border: 1.5px solid #e0e0e0; }
+  .demo-option .opt-store { font-weight: 600; }
+  .demo-option .opt-price { font-weight: 800; color: #128c7e; }
+  .demo-rec {
+    display: flex; align-items: center; gap: 8px;
+    padding-top: 10px; border-top: 1px solid #eee;
+    font-weight: 700; font-size: .88rem; color: #111;
+  }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, #162a52 0%, var(--navy) 70%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 50% at 50% 0%, rgba(240,180,41,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cta-phone {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--white);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-top: 32px;
+  }
+  .cta-phone .wpp-icon { color: var(--green-wpp); font-size: 1.8rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(240,180,41,0.1);
+    text-align: center;
+    padding: 28px 5%;
+    color: var(--gray);
+    font-size: .82rem;
+  }
+  footer .logo { font-size: 1.1rem; margin-bottom: 8px; display: block; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    #hero {
+      flex-direction: column;
+      text-align: center;
+      padding: 100px 5% 60px;
+      gap: 48px;
+    }
+    .hero-content { max-width: 100%; }
+    .hero-sub { max-width: 100%; margin-left: auto; margin-right: auto; }
+    .btn-primary { justify-content: center; }
+    .hero-phone { width: 100%; }
+    .phone-wrap { width: 220px; }
+    .phone-screen { min-height: 340px; }
+    .steps-wrap::before { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    nav { padding: 14px 4%; }
+    .logo { font-size: 1.2rem; }
+    nav a.cta-nav { padding: 8px 14px; font-size: .8rem; }
+    section { padding: 60px 5%; }
+  }
+</style>
+	
+<link rel="icon" type="image/png" href="favicon.ico">
+<link rel="apple-touch-icon" href="favicon.ico">
+<meta property="og:site_name" content="ZapLivre">	
+<meta property="og:title" content="ZapLivre — O menor preço no seu WhatsApp">
+<meta property="og:description" content="O melhor preço da Amazon, Mercado Livre e Shopee a um WhatsApp de distância. Conheça a IA do ZapLivre.">
+<meta property="og:image" content="https://zaplivre.ia.br/og-image.jpg">
+<meta property="og:url" content="https://zaplivre.ia.br/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+	
+<meta name="description" content="ZapLivre é a IA que compara preços da Amazon, Mercado Livre e Shopee direto no seu WhatsApp. Encontre o menor preço em segundos e economize em cada compra.">
+<meta name="keywords" content="comparar preços, menor preço, WhatsApp IA, Mercado Livre, Amazon, Shopee, cupons automáticos, economizar nas compras, assistente de compras">
+<meta name="author" content="ZapLivre">
+<meta name="robots" content="index, follow">
+	
+<link rel="canonical" href="https://zaplivre.ia.br">
+	
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ZapLivre",
+  "description": "IA que compara preços da Amazon, Mercado Livre e Shopee direto no WhatsApp",
+  "applicationCategory": "ShoppingApplication",
+  "operatingSystem": "WhatsApp",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "BRL"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+55-11-92617-3473",
+    "contactType": "customer service",
+    "availableLanguage": "Portuguese"
+  }
+}
+</script>	
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" ><img style="position: relative; top:10px;margin-right: 10px " src="logo-zaplivre.png">Zap<span>Livre</span></div>
+  <a class="cta-nav" href="https://wa.me/5511926173473" target="_blank">Buscar Produto</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">⚡ IA de Comparação de Preços</div>
+    <h1 class="hero-title">Mandou um WhatsApp,<br><span>o menor preço chegou.</span></h1>
+    <p class="hero-sub">
+      O melhor preço do mercado a um WhatsApp de distância.
+      <strong>Conheça a IA do ZapLivre.</strong>
+    </p>
+    <a class="btn-primary" href="https://wa.me/5511926173473" target="_blank">
+		
+      <svg  viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.527 5.849L.057 23.882l6.194-1.623A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.37l-.36-.214-3.728.977.998-3.649-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
+      Experimentar o ZapLivre
+    </a>
+  </div>
+
+  <div class="hero-phone">
+    <div class="phone-wrap">
+      <!-- floating marketplace logos -->
+      <div class="float-logo fl-ml"><img src="logo_mercadolivre.png"></div>
+      <div class="float-logo fl-am" style="font-size:.9rem;font-weight:900;color:#ff9900;font-family:Arial;"><img src="logo_amazon.png"></div>
+      <div class="float-logo fl-sh" style="font-size:1.2rem;"><img src="logo_shoppe.png"></div>
+
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="wpp-header">
+            <div class="wpp-avatar">🤖</div>
+            <div>
+              <div class="wpp-name">ZapLivre IA</div>
+              <div class="wpp-status">online agora</div>
+            </div>
+          </div>
+          <div class="wpp-body">
+            <div class="bubble received">Olá! O que você procura hoje?</div>
+            <div class="bubble sent">Preço do iPhone 15</div>
+            <div class="bubble received">Buscando nos marketplaces... 🔍</div>
+            <div class="comparison-card">
+              <div class="card-title">📊 Comparação</div>
+              <div style="font-size:.68rem;color:#555;margin-bottom:6px;">Produto: iPhone 15 (128GB)</div>
+              <div class="option best">
+                <span class="label">A · Mercado Livre</span>
+                <span class="price">R$ 4.299</span>
+              </div>
+              <div class="option alt">
+                <span class="label">B · Amazon Prime</span>
+                <span class="price">R$ 4.499</span>
+              </div>
+              <div class="rec">⭐ Recomendação: Opção A</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <h2 class="section-title reveal">Esqueça o labirinto de abas abertas<br><span>e preços confusos.</span></h2>
+  <p class="section-sub reveal">Tudo que você precisa para comprar melhor, numa única conversa de WhatsApp.</p>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <span class="feature-icon">📦</span>
+      <div class="feature-title">Milhões de Produtos</div>
+      <p class="feature-desc">Os estoques da Amazon, Mercado Livre e Shopee centralizados em um só lugar.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">⚖️</span>
+      <div class="feature-title">Comparação em Segundos</div>
+      <p class="feature-desc">A IA vasculha os sites e te entrega o menor preço na hora, direto na conversa.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">🎟️</span>
+      <div class="feature-title">Cupons Automáticos</div>
+      <p class="feature-desc">O sistema rastreia cupons ocultos e aplica o desconto diretamente no seu link.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <h2 class="section-title reveal">Fricção Zero.<br><span>Veja como é fácil e seguro:</span></h2>
+  <p class="section-sub reveal">Três passos simples para o menor preço do mercado chegar até você.</p>
+
+  <div class="steps-wrap">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-icon">💬</div>
+      <h3>Peça no Zap</h3>
+      <p>Mande um "Oi" e diga o que procura (ex: "Qual o melhor preço para o iPhone 15?").</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-icon">🤖</div>
+      <h3>A IA Trabalha</h3>
+      <p>Você recebe na hora uma "Comparação" mostrando a opção mais barata.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-icon">🔒</div>
+      <h3>Compre com Segurança</h3>
+      <p>Clique no link e finalize o pagamento diretamente nos sites oficiais. Garantia 100% protegida.</p>
+    </div>
+  </div>
+
+  <!-- Demo Comparison Card -->
+  <div class="demo-card reveal">
+    <div class="demo-card-header">
+      📊 Comparação — ZapLivre
+    </div>
+    <div class="demo-card-body">
+      <div class="demo-row">
+        <span class="label">Produto:</span>
+        <span>iPhone 15 (128GB)</span>
+      </div>
+      <div class="demo-option best">
+        <span class="opt-store">⭐ Opção A · Mercado Livre (Full)</span>
+        <span class="opt-price">R$ 4.299,00</span>
+      </div>
+      <div class="demo-option alt">
+        <span class="opt-store">Opção B · Amazon (Prime)</span>
+        <span class="opt-price">R$ 4.499,00</span>
+      </div>
+      <div class="demo-rec">
+        ⭐ Recomendação ZapLivre: <span style="color:#128c7e">Opção A — economize R$ 200</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 class="section-title reveal">Seu Assistente Pessoal<br><span>Aguarda</span></h2>
+  <p class="section-sub reveal">A revolução das compras está a apenas uma mensagem de distância.<br>
+  Escaneie o QR Code ou clique no botão abaixo para começar a economizar agora mesmo.</p>
+<img style="margin-bottom: 30px" src="qrcode-zaplivre.png">
+  <div  style="display:flex;justify-content:center" class="reveal">
+	  
+    <a class="btn-primary" href="https://wa.me/5511926173473" target="_blank" style="font-size:1.1rem;padding:18px 40px;">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:26px;height:26px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.527 5.849L.057 23.882l6.194-1.623A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.37l-.36-.214-3.728.977.998-3.649-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
+      Falar com o ZapLivre Agora
+    </a>
+  </div>
+
+  <div class="cta-phone reveal">
+    <span class="wpp-icon">📱</span>
+    +55 11 92617-3473
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo">Zap<span style="color:#fff">Livre</span></span>
+  © 2026 ZapLivre · O menor preço no seu WhatsApp · Todos os direitos reservados
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
