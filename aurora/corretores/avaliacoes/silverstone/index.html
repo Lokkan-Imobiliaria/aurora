@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta OG / WhatsApp -->
+<meta property="og:type"        content="website">
+<meta property="og:title"       content="Avaliação - GIO Jardins">
+<meta property="og:description" content="Habilite-se a receber leads qualificados.">
+<meta property="og:image"       content="https://aurora.imb.br/corretores/avaliacoes/gio/og-image.jpg">
+<meta property="og:url"         content="https://aurora.imb.br/corretores/avaliacoes/gio/">
+<meta property="og:locale"      content="pt_BR">
+<title>Avaliação de Corretores — Residencial Silverstone</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --ink:#1a1a2e; --ink-light:#4a4a6a; --bg:#f7f6f2; --white:#fff;
+    --accent:#c8954a; --accent-light:#f5ede0;
+    --success:#2d8a6e; --danger:#c0392b; --border:#e2e0d8;
+    --shadow:0 4px 24px rgba(26,26,46,.10);
+  }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px; }
+  .container { width:100%; max-width:640px; }
+  .brand { text-align:center; margin-bottom:32px; }
+  .brand-tag { display:inline-block; font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); background:var(--accent-light); padding:4px 12px; border-radius:20px; margin-bottom:10px; }
+  .brand h1 { font-size:30px; font-weight:800; color:var(--ink); line-height:1.15; letter-spacing:-.5px; }
+  .brand p { font-size:14px; color:var(--ink-light); margin-top:6px; }
+  .card { background:var(--white); border-radius:20px; padding:36px 40px; box-shadow:var(--shadow); }
+  @media(max-width:500px){ .card{padding:28px 20px;} }
+  .screen { display:none; } .screen.active { display:block; }
+
+  .form-group { margin-bottom:20px; }
+  .form-group label { display:block; font-size:12px; font-weight:700; color:var(--ink-light); letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
+  .form-group input { width:100%; padding:14px 16px; border:2px solid var(--border); border-radius:12px; font-size:16px; font-family:'Inter',sans-serif; color:var(--ink); background:var(--bg); outline:none; transition:border-color .2s; }
+  .form-group input:focus { border-color:var(--accent); background:var(--white); }
+  .form-title { font-size:22px; font-weight:800; margin-bottom:8px; letter-spacing:-.3px; }
+  .form-sub { font-size:14px; color:var(--ink-light); margin-bottom:28px; line-height:1.6; }
+
+  .timer-wrap { margin-bottom:24px; }
+  .timer-bar-bg { height:5px; background:var(--border); border-radius:10px; overflow:hidden; margin-bottom:6px; }
+  .timer-bar-fill { height:100%; background:var(--accent); border-radius:10px; transition:width 1s linear,background .5s; width:100%; }
+  .timer-bar-fill.warn { background:#e67e22; } .timer-bar-fill.danger { background:var(--danger); }
+  .timer-label { font-size:12px; color:var(--ink-light); text-align:right; }
+
+  .progress-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; gap:12px; }
+  .progress-dots { display:flex; gap:5px; flex-wrap:wrap; }
+  .dot { width:24px; height:8px; border-radius:4px; background:var(--border); transition:background .25s; }
+  .dot.answered { background:var(--accent); } .dot.current { background:var(--ink); }
+  .progress-text { font-size:12px; font-weight:600; color:var(--ink-light); white-space:nowrap; }
+
+  .q-number { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .q-text { font-size:18px; font-weight:600; line-height:1.45; margin-bottom:24px; color:var(--ink); }
+
+  .options { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+  .option { display:flex; align-items:center; gap:14px; padding:14px 18px; border:2px solid var(--border); border-radius:14px; cursor:pointer; transition:border-color .2s,background .2s; background:var(--bg); user-select:none; }
+  .option:hover { border-color:var(--accent); background:var(--accent-light); }
+  .option.selected { border-color:var(--ink); background:var(--white); }
+  .option-letter { width:30px; height:30px; border-radius:8px; background:var(--white); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0; color:var(--ink-light); transition:background .2s,border-color .2s,color .2s; }
+  .option.selected .option-letter { background:var(--ink); border-color:var(--ink); color:var(--white); }
+  .option-text { font-size:15px; line-height:1.4; color:var(--ink); }
+
+  .nav-row { display:flex; gap:10px; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+  .btn { padding:13px 24px; border-radius:12px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; cursor:pointer; border:none; transition:opacity .2s,transform .1s; }
+  .btn:active { transform:scale(.97); } .btn:disabled { opacity:.3; cursor:not-allowed; }
+  .btn-ghost { background:transparent; border:2px solid var(--border); color:var(--ink-light); }
+  .btn-ghost:hover:not(:disabled) { border-color:var(--ink-light); }
+  .btn-primary { background:var(--ink); color:var(--white); }
+  .btn-primary:hover:not(:disabled) { background:#2d2d50; }
+  .btn-success { background:var(--success); color:var(--white); }
+  .btn-success:hover:not(:disabled) { background:#256f58; }
+  .btn-lg { padding:16px 32px; font-size:15px; width:100%; margin-top:10px; }
+  .btn-outline-pdf { display:block; width:100%; padding:13px; margin-top:12px; border-radius:12px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; cursor:pointer; border:2px solid #47fdeb; background:#47fdeb40; color:var(--ink-light); text-align:center; text-decoration:none; transition:border-color .2s,color .2s; }
+  .btn-outline-pdf:hover { border-color:var(--accent); color:var(--accent); }
+  .btn-refazer { display:block; width:100%; padding:14px; margin-top:16px; border-radius:12px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; cursor:pointer; border:2px solid var(--border); background:transparent; color:var(--ink); text-align:center; transition:border-color .2s,background .2s; }
+  .btn-refazer:hover { border-color:var(--ink); background:var(--bg); }
+
+  .result-score { text-align:center; padding:24px 0 20px; }
+  .score-circle { width:110px; height:110px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto 18px; border:4px solid; }
+  .score-circle.approved { background:#e8f6f2; border-color:var(--success); }
+  .score-circle.failed   { background:#fdecea; border-color:var(--danger); }
+  .score-num { font-size:38px; font-weight:800; line-height:1; }
+  .score-circle.approved .score-num { color:var(--success); }
+  .score-circle.failed   .score-num { color:var(--danger); }
+  .score-denom { font-size:13px; font-weight:500; color:var(--ink-light); }
+  .result-name { font-size:20px; font-weight:800; margin-bottom:6px; letter-spacing:-.3px; }
+  .result-status { display:inline-block; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:10px; }
+  .result-status.approved { background:#e8f6f2; color:var(--success); }
+  .result-status.failed   { background:#fdecea; color:var(--danger); }
+  .result-msg { font-size:14px; color:var(--ink-light); line-height:1.6; max-width:400px; margin:0 auto; }
+  .result-detail { border-top:1px solid var(--border); padding-top:20px; margin-top:20px; }
+  .result-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--border); font-size:14px; }
+  .result-row:last-child { border-bottom:none; }
+  .result-row span:first-child { color:var(--ink-light); }
+  .result-row span:last-child { font-weight:600; }
+  .badge-ok { color:var(--success)!important; } .badge-no { color:var(--danger)!important; }
+  .retry-block { background:#fff8f0; border:1.5px solid var(--accent); border-radius:14px; padding:18px 20px; margin-top:20px; font-size:14px; line-height:1.6; color:var(--ink); text-align:center; }
+
+  .review-block { display:block; margin-top:24px; border-top:1px solid var(--border); padding-top:20px; }
+  .review-title { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-light); margin-bottom:14px; }
+  .review-item { background:var(--bg); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
+  .review-q { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:8px; line-height:1.4; }
+  .review-row { font-size:13px; line-height:1.5; padding:3px 0; }
+  .review-row.wrong { color:var(--danger); }
+  .review-row.right { color:var(--success); font-weight:600; }
+  .review-row .lbl { font-weight:700; margin-right:4px; }
+
+  .timeout-icon { font-size:48px; text-align:center; margin-bottom:16px; }
+  .timeout-title { font-size:22px; font-weight:800; text-align:center; margin-bottom:10px; }
+  .timeout-msg { font-size:15px; color:var(--ink-light); text-align:center; line-height:1.5; margin-bottom:24px; }
+
+  .spinner { display:inline-block; width:16px; height:16px; border:2.5px solid rgba(255,255,255,.4); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; vertical-align:middle; margin-right:8px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  .back_but { text-decoration:none; bottom:16px; position:relative; font-weight:bold; color:#474747; }
+  .back_but:hover { color:#838080; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back_but" href="https://aurora.imb.br/corretores/avaliacoes">< VOLTAR </a>
+  <div class="brand">
+    <div class="brand-tag">MRV</div>
+    <h1>Residencial Silverstone</h1>
+    <p>Avaliação de Conhecimento — Corretores</p>
+  </div>
+
+  <div class="card">
+
+    <!-- TELA 1: IDENTIFICAÇÃO -->
+    <div class="screen active" id="screen-intro">
+      <div class="form-title">Antes de começar</div>
+      <p class="form-sub">Preencha seus dados. A avaliação tem <strong>10 perguntas</strong> e você terá <strong>3 minutos</strong> para concluir. Mínimo de <strong>8 acertos</strong> para aprovação.</p>
+      <div class="form-group">
+        <label>Seu nome</label>
+        <input type="text" id="inp-nome" placeholder="Nome completo" autocomplete="name" required>
+      </div>
+      <div class="form-group">
+        <label>WhatsApp</label>
+        <input type="tel" id="inp-tel" placeholder="(11) 99999-9999" maxlength="15" required>
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="inp-email" placeholder="seuemail@exemplo.com" autocomplete="email" required>
+      </div>
+      <button class="btn btn-primary btn-lg" id="btn-iniciar" onclick="startQuiz()">Iniciar avaliação →</button>
+      <a href="https://aurora.imb.br/corretores/avaliacoes/apresentacoes/Silverstone.pdf" target="_blank" class="btn-outline-pdf">📄 Baixar PDF para estudo</a>
+    </div>
+
+    <!-- TELA 2: QUIZ -->
+    <div class="screen" id="screen-quiz">
+      <div class="timer-wrap">
+        <div class="timer-bar-bg"><div class="timer-bar-fill" id="timer-bar"></div></div>
+        <div class="timer-label" id="timer-label">3:00</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-dots" id="progress-dots"></div>
+        <div class="progress-text" id="progress-text"></div>
+      </div>
+      <div class="q-number" id="q-number"></div>
+      <div class="q-text" id="q-text"></div>
+      <div class="options" id="options-container"></div>
+      <div class="nav-row">
+        <button class="btn btn-ghost" id="btn-prev" onclick="goTo(currentIndex-1)">← Anterior</button>
+        <button class="btn btn-success" id="btn-finish" onclick="confirmFinish()" style="display:none">Finalizar avaliação ✓</button>
+        <button class="btn btn-primary" id="btn-next" onclick="goTo(currentIndex+1)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- TELA 3: TIMEOUT -->
+    <div class="screen" id="screen-timeout">
+      <div class="timeout-icon">⏱️</div>
+      <div class="timeout-title">Tempo esgotado!</div>
+      <p class="timeout-msg">O tempo de 3 minutos acabou. Veja o resultado com as respostas que você deu.</p>
+      <button class="btn btn-primary btn-lg" onclick="finalizarComTimeout()">Ver meu resultado</button>
+    </div>
+
+    <!-- TELA 4: RESULTADO -->
+    <div class="screen" id="screen-result">
+      <div class="result-score">
+        <div class="score-circle" id="score-circle">
+          <div class="score-num" id="res-score"></div>
+          <div class="score-denom" id="res-denom">de 10</div>
+        </div>
+        <div class="result-name" id="res-name"></div>
+        <div class="result-status" id="res-status"></div>
+        <p class="result-msg" id="res-msg"></p>
+      </div>
+      <div class="result-detail">
+        <div class="result-row"><span>Respondidas</span><span id="res-answered"></span></div>
+        <div class="result-row"><span>Acertos</span><span class="badge-ok" id="res-correct"></span></div>
+        <div class="result-row"><span>Erros</span><span class="badge-no" id="res-wrong"></span></div>
+        <div class="result-row"><span>Não respondidas</span><span id="res-skipped"></span></div>
+      </div>
+
+      <!-- Bloco reprovado -->
+      <div class="retry-block" id="retry-block" style="display:none">
+        <p style="margin-bottom:14px;color:var(--ink-light);font-size:13px;">Revise o material e tente novamente quando estiver pronto.</p>
+        <button class="btn-refazer" onclick="refazerAvaliacao()">↺ Refazer avaliação</button>
+      </div>
+
+      <!-- GABARITO DE ERROS — para ocultar, troque style="display:block" por style="display:none" -->
+      <div class="review-block" id="review-block" style="display:block"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const BANCO = [
+  // ── SILVERSTONE ──
+  { q:"Em qual endereço está localizado o Residencial Silverstone?", correta:"Rua Miguel Yunes, 1419 — Usina Piratininga, São Paulo", erradas:["Rua Pirajussara, 448 — Butantã","Rua Camargo, 472 — Butantã"] },
+  { q:"Quantas torres possui o Residencial Silverstone?", correta:"2 torres", erradas:["1 torre","3 torres"] },
+  { q:"Qual o total de unidades do Residencial Silverstone?", correta:"432 unidades", erradas:["108 unidades","280 unidades"] },
+  { q:"Quantos pavimentos tem cada torre do Silverstone?", correta:"Térreo + 17 pavimentos (18 no total)", erradas:["Térreo + 9 pavimentos","Térreo + 22 pavimentos"] },
+  { q:"Quantas unidades existem por andar no Silverstone?", correta:"12 unidades por andar", erradas:["6 unidades por andar","8 unidades por andar"] },
+  { q:"Quantos elevadores o empreendimento possui?", correta:"4 elevadores", erradas:["2 elevadores","6 elevadores"] },
+  { q:"Qual o tipo de enquadramento do Residencial Silverstone?", correta:"HIS-2 (Habitação de Interesse Social faixa 2)", erradas:["HIS-1","Produto convencional sem enquadramento social"] },
+  { q:"O empreendimento possui vagas de garagem para todos os moradores?", correta:"Não — são apenas 65 vagas para 432 unidades", erradas:["Sim, 1 vaga por unidade","Sim, vagas opcionais para compra"] },
+  { q:"Qual é o grande diferencial das unidades térreas do Silverstone?", correta:"Todas possuem quintal privativo (giardino) de ~19m² a 25m²", erradas:["Pé-direito duplo em todas as unidades","Varanda gourmet exclusiva"] },
+  { q:"Quais metragens estão disponíveis nas unidades tipo (andares)?", correta:"35,64m² + terraço (2,15m²), 39,56m² e 39,83m²", erradas:["50m², 60m² e 70m²","28m², 31m² e 35m²"] },
+  { q:"Qual o sistema construtivo utilizado no Silverstone?", correta:"Paredes de concreto (sem drywall)", erradas:["Alvenaria estrutural convencional","Steel frame"] },
+  { q:"O que NÃO vem com piso cerâmico nas unidades do Silverstone?", correta:"Sala, cozinha e dormitórios ficam sem piso", erradas:["Banheiro e área de serviço ficam sem piso","Todas as áreas são entregues com piso cerâmico"] },
+  { q:"Qual desses espaços de lazer está disponível no Residencial Silverstone?", correta:"Redário, Pet Place, Espaço Zen e Mini Quadra", erradas:["Piscina coberta, sauna e spa","Coworking, lounge noturno e espaço beauty"] },
+  { q:"As unidades do Silverstone possuem varanda?", correta:"Apenas as unidades de canto possuem varanda", erradas:["Sim, todas as unidades possuem varanda","Apenas as unidades dos últimos andares"] },
+  { q:"Como é o tipo de aquecimento de água nas unidades do Silverstone?", correta:"Aquecimento a gás", erradas:["Aquecimento elétrico","Energia solar"] },
+  { q:"O Silverstone possui espaço de lazer para crianças?", correta:"Sim, Playground e Playbaby", erradas:["Não há espaço infantil","Apenas brinquedoteca fechada"] },
+  { q:"Qual o público-alvo ideal para o Residencial Silverstone?", correta:"Famílias com renda compatível com HIS-2 em busca do primeiro imóvel", erradas:["Investidores de alta renda buscando imóveis de luxo","Empresas em busca de imóvel comercial"] },
+  { q:"O Silverstone possui Espaço Gourmet com churrasqueira?", correta:"Sim, há Espaço Gourmet com churrasqueira", erradas:["Não, apenas salão de festas sem churrasqueira","Sim, mas apenas para moradores do térreo"] },
+  { q:"Quais tecnologias o Silverstone utiliza para reduzir custos dos moradores?", correta:"Lâmpadas de baixo consumo e dispositivos economizadores de água", erradas:["Painéis solares e aquecimento geotérmico","Gerador próprio e cisternas individuais"] },
+  { q:"Em que bairro de São Paulo está localizado o Residencial Silverstone?", correta:"Usina Piratininga", erradas:["Butantã","Vila Andrade"] },
+  // ── MINHA CASA MINHA VIDA ──
+  { q:"Qual a renda familiar bruta máxima para participar do Minha Casa Minha Vida?", correta:"Até R$ 13.000 por mês", erradas:["Até R$ 5.000 por mês","Até R$ 20.000 por mês"] },
+  { q:"No MCMV, qual o valor máximo do imóvel para a Faixa 3 (renda R$ 5.000,01 a R$ 9.600)?", correta:"Até R$ 400.000, com taxas de até 8,16% ao ano", erradas:["Até R$ 264.000, com taxas a partir de 4% ao ano","Até R$ 600.000, com juros de cerca de 10,5% ao ano"] },
+  { q:"No Minha Casa Minha Vida, qual o limite máximo da parcela mensal em relação à renda?", correta:"A parcela não pode ultrapassar 30% da renda familiar bruta", erradas:["A parcela não pode ultrapassar 50% da renda familiar bruta","Não há limite de comprometimento de renda"] },
+  { q:"Quais são os critérios básicos para participar do MCMV além da renda?", correta:"Não possuir outro imóvel e não ter sido beneficiado anteriormente por programas habitacionais", erradas:["Ter filhos e comprovar 5 anos de residência no município","Ter carteira assinada há pelo menos 2 anos"] },
+  { q:"No MCMV Faixa 1 (renda até R$ 3.200), qual a taxa de juros mínima?", correta:"A partir de 4% ao ano", erradas:["A partir de 10% ao ano","A partir de 7% ao ano"] },
+  // ── HIS — Habitação de Interesse Social ──
+  { q:"O que define se um empreendimento é HIS?", correta:"A renda dos beneficiários — não a área do apartamento nem a localização", erradas:["A metragem mínima de 30m² por unidade","A localização em zona periférica da cidade"] },
+  { q:"Qual a diferença entre HIS-1 e HIS-2?", correta:"HIS-1: renda até 3 salários mínimos. HIS-2: renda entre 3 e 6 salários mínimos", erradas:["HIS-1 é para imóveis até 40m² e HIS-2 para imóveis até 60m²","HIS-1 é federal e HIS-2 é estadual"] },
+  { q:"Além da renda, qual outro critério o comprador deve atender para adquirir um imóvel HIS?", correta:"Não possuir outro imóvel residencial e comprovar enquadramento na faixa de renda", erradas:["Ter no mínimo 3 filhos dependentes","Ter residido no município por pelo menos 10 anos"] },
+  { q:"Por que empreendimentos HIS recebem subsídios e incentivos urbanísticos?", correta:"Para ampliar a oferta de moradia acessível em áreas dotadas de infraestrutura", erradas:["Para aumentar o lucro das construtoras em regiões nobres","Para financiar obras de infraestrutura pública nas periferias"] }
+];
+
+const TOTAL         = 14;
+const APROVACAO_MIN = 10;
+
+let nomeUser='', telUser='', emailUser='';
+let questoes=[], respostas=[];
+let currentIndex=0, timerInterval=null, tempoRestante=180;
+
+// ── MÁSCARA ──
+document.getElementById('inp-tel').addEventListener('input', function(e){
+  let v = e.target.value.replace(/\D/g,'');
+  if(v.length>11) v=v.slice(0,11);
+  if(v.length<=2) v=v;
+  else if(v.length<=7) v=`(${v.slice(0,2)}) ${v.slice(2)}`;
+  else v=`(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+  e.target.value=v;
+});
+
+// ── INICIAR ──
+async function startQuiz() {
+  nomeUser  = document.getElementById('inp-nome').value.trim();
+  telUser   = document.getElementById('inp-tel').value.trim();
+  emailUser = document.getElementById('inp-email').value.trim();
+  if(!nomeUser){ alert('Por favor, informe seu nome.'); return; }
+  if(telUser.replace(/\D/g,'').length<10){ alert('Por favor, informe um WhatsApp válido.'); return; }
+  if(!emailUser || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailUser)){ alert('Por favor, informe um e-mail válido.'); return; }
+
+  const btn = document.getElementById('btn-iniciar');
+  btn.innerHTML='<span class="spinner"></span> Carregando…';
+  btn.disabled=true;
+
+  // Sorteia questões
+  const shuffled=[...BANCO].sort(()=>Math.random()-.5);
+  questoes=shuffled.slice(0,TOTAL).map(q=>{
+    const opts=[q.correta,...q.erradas].sort(()=>Math.random()-.5);
+    return { q:q.q, opts, corretaIdx:opts.indexOf(q.correta) };
+  });
+  respostas=new Array(TOTAL).fill(null);
+  currentIndex=0; tempoRestante=180;
+
+  btn.innerHTML='Iniciar avaliação →';
+  btn.disabled=false;
+
+  showScreen('screen-quiz');
+  renderDots(); renderQuestion(); startTimer();
+}
+
+// ── REFAZER ──
+function refazerAvaliacao(){
+  showScreen('screen-intro');
+}
+
+// ── TIMER ──
+function startTimer(){
+  timerInterval=setInterval(()=>{
+    tempoRestante--;
+    updateTimerUI();
+    if(tempoRestante<=0){ clearInterval(timerInterval); showScreen('screen-timeout'); }
+  },1000);
+}
+function updateTimerUI(){
+  const pct=(tempoRestante/180)*100;
+  const bar=document.getElementById('timer-bar');
+  bar.style.width=pct+'%';
+  bar.className='timer-bar-fill'+(pct<=15?' danger':pct<=30?' warn':'');
+  const m=Math.floor(tempoRestante/60), s=tempoRestante%60;
+  document.getElementById('timer-label').textContent=`${m}:${s.toString().padStart(2,'0')}`;
+}
+
+// ── RENDER ──
+function renderDots(){
+  const c=document.getElementById('progress-dots'); c.innerHTML='';
+  questoes.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='dot'+(respostas[i]!==null?' answered':'')+(i===currentIndex?' current':'');
+    c.appendChild(d);
+  });
+  const ans=respostas.filter(r=>r!==null).length;
+  document.getElementById('progress-text').textContent=`${ans}/${TOTAL} respondidas`;
+  document.getElementById('btn-finish').style.display=ans===TOTAL?'inline-block':'none';
+}
+function renderQuestion(){
+  const q=questoes[currentIndex];
+  document.getElementById('q-number').textContent=`Pergunta ${currentIndex+1} de ${TOTAL}`;
+  document.getElementById('q-text').textContent=q.q;
+  const c=document.getElementById('options-container'); c.innerHTML='';
+  ['A','B','C'].forEach((l,i)=>{
+    const div=document.createElement('div');
+    div.className='option'+(respostas[currentIndex]===i?' selected':'');
+    div.innerHTML=`<div class="option-letter">${l}</div><div class="option-text">${q.opts[i]}</div>`;
+    div.onclick=()=>selectOption(i);
+    c.appendChild(div);
+  });
+  document.getElementById('btn-prev').disabled=currentIndex===0;
+  document.getElementById('btn-next').disabled=currentIndex===TOTAL-1;
+  renderDots();
+}
+function selectOption(idx){ respostas[currentIndex]=idx; renderQuestion(); }
+function goTo(idx){ if(idx>=0&&idx<TOTAL){ currentIndex=idx; renderQuestion(); } }
+
+// ── FINALIZAR ──
+function confirmFinish(){ clearInterval(timerInterval); showResult(); }
+function finalizarComTimeout(){ showResult(); }
+
+async function showResult(){
+  showScreen('screen-result');
+  const acertos     = respostas.filter((r,i)=>r!==null&&r===questoes[i].corretaIdx).length;
+  const respondidas = respostas.filter(r=>r!==null).length;
+  const aprovado    = acertos>=APROVACAO_MIN;
+
+  // Visual
+  document.getElementById('score-circle').className='score-circle '+(aprovado?'approved':'failed');
+  document.getElementById('res-score').textContent=acertos;
+  document.getElementById('res-denom').textContent='de '+TOTAL;
+  document.getElementById('res-name').textContent=nomeUser;
+  const st=document.getElementById('res-status');
+  st.className='result-status '+(aprovado?'approved':'failed');
+  st.textContent=aprovado?'✓ Aprovado':'✗ Reprovado';
+
+  document.getElementById('res-msg').textContent = aprovado
+    ? 'Parabéns! Você está aprovado e vai começar a receber leads qualificados do GIO Jardins. Fique atento ao seu WhatsApp! 🎯'
+    : `Você não atingiu a pontuação mínima de ${APROVACAO_MIN} acertos desta vez. Revise o material e tente novamente quando estiver pronto. 💪`;
+
+  document.getElementById('res-answered').textContent=respondidas;
+  document.getElementById('res-correct').textContent=`✓ ${acertos} corretas`;
+  document.getElementById('res-wrong').textContent=`✗ ${respondidas-acertos} erradas`;
+  document.getElementById('res-skipped').textContent=TOTAL-respondidas;
+
+  // Botão refazer só aparece para reprovados
+  document.getElementById('retry-block').style.display = aprovado ? 'none' : 'block';
+
+  // Gabarito de erros
+  const reviewBlock = document.getElementById('review-block');
+  const erradas = questoes
+    .map((q,i)=>({ q, i, marcada:respostas[i] }))
+    .filter(item=>item.marcada!==null && item.marcada!==item.q.corretaIdx);
+
+  if(erradas.length===0){
+    reviewBlock.innerHTML='';
+  } else {
+    let html=`<div class="review-title">Questões erradas (${erradas.length})</div>`;
+    erradas.forEach(item=>{
+      const letras=['A','B','C'];
+      html+=`<div class="review-item">
+        <div class="review-q">${esc(item.q.q)}</div>
+        <div class="review-row wrong"><span class="lbl">Sua resposta (${letras[item.marcada]}):</span>${esc(item.q.opts[item.marcada])}</div>
+        <div class="review-row right"><span class="lbl">Correta (${letras[item.q.corretaIdx]}):</span>${esc(item.q.opts[item.q.corretaIdx])}</div>
+      </div>`;
+    });
+    reviewBlock.innerHTML=html;
+  }
+
+  // Salva resultado no servidor
+  try {
+    await fetch('salvar.php',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ nome:nomeUser, tel:telUser, email:emailUser, acertos, total:TOTAL, aprovado })
+    });
+  } catch(e){ /* silencioso */ }
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+</script>
+</body>
+</html>
