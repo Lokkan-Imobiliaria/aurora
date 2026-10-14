@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gio Jardins | Mitre Exclusive Collection</title>
+<style>
+  /* ============ RESET & BASE ============ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    color: #1a1a1a;
+    background: #ffffff;
+    line-height: 1.6;
+  }
+  h1, h2, h3 { font-weight: 400; letter-spacing: 0.05em; }
+  .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .sans { font-family: 'Montserrat', Arial, sans-serif; }
+  .uppercase { text-transform: uppercase; letter-spacing: 0.3em; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  img { max-width: 100%; display: block; }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+    padding: 18px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  nav .logo { color: #fff; font-size: 1.2rem; letter-spacing: 0.3em; text-transform: uppercase; }
+  nav .logo img { height: 25px; }
+  nav ul { list-style: none; display: flex; gap: 30px; }
+  nav ul li a { color: #e8e8e8; text-decoration: none; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; transition: color .3s; }
+  nav ul li a:hover { color: #c9a86a; }
+  .nav-toggle { display: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+
+  /* ============ HERO ============ */
+  .hero {
+    height: 100vh; min-height: 600px;
+    background: url('https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Acesso.jpg') center/cover no-repeat;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    position: relative;
+  }
+  .hero::before { content:''; position:absolute; inset:0; background: rgba(0,0,0,0.45); }
+  .hero-content { position: relative; color: #fff; padding: 20px; }
+  .hero h1 { font-size: clamp(2rem, 6vw, 4.5rem); margin-bottom: 10px; }
+  .hero p { font-size: clamp(1rem, 2vw, 1.4rem); letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.9; }
+  .hero .btn { margin-top: 30px; }
+
+  /* ============ BUTTONS ============ */
+  .btn {
+    display: inline-block; padding: 14px 40px;
+    border: 1px solid #c9a86a; color: #c9a86a;
+    text-decoration: none; text-transform: uppercase; letter-spacing: 0.25em; font-size: 0.8rem;
+    transition: all .3s; cursor: pointer; background: transparent;
+  }
+  .btn:hover { background: #c9a86a; color: #fff; }
+  .btn-light { border-color: #fff; color: #fff; }
+  .btn-light:hover { background: #fff; color: #1a1a1a; }
+
+  /* ============ SECTIONS ============ */
+  section { padding: 100px 0; }
+  .section-label { color: #c9a86a; font-size: 0.75rem; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 15px; }
+  .section-title { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 30px; }
+  .section-sub { max-width: 700px; margin: 0 auto 50px; text-align: center; color: #555; }
+
+  .center { text-align: center; }
+
+  /* ============ WELCOME ============ */
+  .welcome { background: #faf7f2; text-align: center; }
+  .welcome .section-title { font-style: italic; }
+
+  /* ============ SERVICES GRID ============ */
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;
+    margin-top: 50px;
+  }
+  .service-card { text-align: center; padding: 30px 20px; border-top: 1px solid #e0d8cc; }
+  .service-card h3 { font-size: 1.4rem; margin-bottom: 12px; color: #1a1a1a; }
+  .service-card p { color: #666; font-size: 0.95rem; }
+
+  /* ============ GALLERY / LAZER ============ */
+  .lazzer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .lazzer-item { position: relative; overflow: hidden; height: 250px; }
+  .lazzer-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+  .lazzer-item:hover img { transform: scale(1.05); }
+  .lazzer-item .caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: #fff; padding: 10px 15px; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  /* ============ PLANTS ============ */
+  .plants { background: #faf7f2; }
+  .plant-card { max-width: 800px; margin: 0 auto 60px; text-align: center; }
+  .plant-card img { margin: 20px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+  .plant-card h3 { font-size: 1.6rem; margin-bottom: 10px; }
+  .plant-card ul { list-style: none; text-align: left; max-width: 600px; margin: 20px auto; color: #555; }
+  .plant-card ul li { padding: 6px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+
+  /* ============ VIDEO ============ */
+  .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 1000px; margin: 0 auto; }
+  .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+  /* ============ FORM ============ */
+  .contact { background: #1a1a1a; color: #fff; }
+  .contact .section-title { color: #fff; }
+  .contact form { max-width: 600px; margin: 0 auto; }
+  .contact input, .contact select, .contact textarea {
+    width: 100%; padding: 14px; margin-bottom: 15px;
+    background: transparent; border: 1px solid #555; color: #fff;
+    font-family: 'Montserrat', sans-serif; font-size: 0.9rem;
+  }
+  .contact input::placeholder { color: #999; }
+  .contact .btn { width: 100%; }
+
+  /* ============ FOOTER ============ */
+  footer { background: #111; color: #888; text-align: center; padding: 40px 20px; font-size: 0.8rem; }
+  footer .social a { color: #c9a86a; margin: 0 10px; text-decoration: none; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 768px) {
+    nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(0,0,0,0.95); padding: 20px; }
+    nav ul.open { display: flex; }
+    .nav-toggle { display: block; }
+    section { padding: 60px 0; }
+  }
+</style>
+	
+	
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18358347900"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18358347900');
+</script>	
+	<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1709549860471066');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1709549860471066&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="logo"><img src="https://aurora.imb.br/images/logo.png" alt="Gio Jardins"></div>
+  <div class="nav-toggle" onclick="document.querySelector('nav ul').classList.toggle('open')">☰</div>
+  <ul>
+    <li><a href="#welcome">Welcome</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#lazer">Lazer</a></li>
+    <li><a href="#plantas">Plantas</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-content">
+    <p class="uppercase">Luxury Residences de 276m² e 178m²</p>
+    <h1>GIO JARDINS</h1>
+    <p>Uma experiência personalizada em moradia</p>
+    <a href="#plantas" class="btn btn-light">Planta Gio Jardins</a>
+  </div>
+</header>
+
+<!-- ============ WELCOME ============ -->
+<section class="welcome" id="welcome">
+  <div class="container center">
+    <div class="section-label">> Welcome</div>
+    <h2 class="section-title">gio jardins. um projeto inspirado nos melhores hotéis do mundo.</h2>
+    <p class="section-sub">Prepare-se para viver a hospitalidade dos hotéis internacionais, com um diferencial exclusivo: dentro do seu apartamento. E todos os dias.</p>
+  </div>
+</section>
+
+<!-- ============ HOSPITALITY ============ -->
+<section id="hospitality">
+  <div class="container center">
+    <div class="section-label">> It's About</div>
+    <h2 class="section-title">Hospitality</h2>
+    <p class="section-sub">Exclusividade, acabamentos impecáveis, tecnologia, design e serviços que acolhem e surpreendem o morador. Essa é a essência Gio Jardins. Inspirados nos mais renomados hotéis, como o Baccarat de Nova York, o Savoy e o One Hyde Park Mandarin Oriental de Londres, e o Four Seasons George V de Paris.</p>
+  </div>
+</section>
+
+<!-- ============ SERVIÇOS ============ -->
+<section id="servicos" style="background:#faf7f2;">
+  <div class="container center">
+    <div class="section-label">> Serviços</div>
+    <h2 class="section-title">Concierge & Serviços</h2>
+    <div class="services-grid">
+      <div class="service-card"><h3>Concierge</h3><p>Profissional experiente e bem-relacionado, à disposição dos moradores para atender a seus interesses, como reservas em restaurantes e spas.</p></div>
+      <div class="service-card"><h3>Assessoria de Eventos</h3><p>Organização e realização de eventos, desde jantares privativos em sua residência a confraternizações no Espaço Festas.</p></div>
+      <div class="service-card"><h3>Laundry Service</h3><p>Lavanderia que recolhe suas roupas para lavar e entrega já passadas.</p></div>
+      <div class="service-card"><h3>Governança</h3><p>Profissionais especializados para limpeza e manutenção da sua residência.</p></div>
+      <div class="service-card"><h3>Mordomia</h3><p>Organização da bagagem e auxílio para cuidados do apartamento na sua ausência.</p></div>
+      <div class="service-card"><h3>Health Coaching</h3><p>Profissionais preparados para auxiliar você em suas atividades físicas.</p></div>
+      <div class="service-card"><h3>Alfaiataria</h3><p>Serviço personalizado de ajuste e conserto de peças para um vestuário elegante e sempre impecável.</p></div>
+      <div class="service-card"><h3>Reparos e Instalações</h3><p>Pequenos reparos domésticos realizados por profissionais de confiança, garantindo agilidade e qualidade.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VÍDEO ============ -->
+<section id="video">
+  <div class="container center">
+    <div class="section-label">> Vídeo</div>
+    <h2 class="section-title">Conheça o Gio Jardins</h2>
+    <div class="video-wrap">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Lo1PewfKcL0?si=V8ID3zyiUCnd1NWh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LAZER ============ -->
+<section id="lazer" style="background:#faf7f2;">
+  <div class="container center">
+    <div class="section-label">> Lazer</div>
+    <h2 class="section-title">Luxury Residences de 178m² a 276m²</h2>
+    <div class="lazzer-grid">
+      <div class="lazzer-item"><img src="https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Pool-House.webp" alt="Piscina"><div class="caption">Piscina</div></div>
+      <div class="lazzer-item"><img src="https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Detalhe-Piscina.webp" alt="Duplex Living"><div class="caption">Duplex Living</div></div>
+      <div class="lazzer-item"><img src="https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Charutaria.webp" alt="Charutaria"><div class="caption">Charutaria</div></div>
+      <div class="lazzer-item"><img src="https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Festas.webp" alt="Espaço Festas"><div class="caption">Espaço Festas</div></div>
+      <div class="lazzer-item"><img src="https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Sauna.webp" alt="Sauna"><div class="caption">Sauna</div></div>
+      <div class="lazzer-item"><img src="https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Fitness.webp" alt="Fitness"><div class="caption">Fitness</div></div>
+      <div class="lazzer-item"><img src="https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Fitness-Externo.webp" alt="Fitness Externo"><div class="caption">Fitness Externo</div></div>
+      <div class="lazzer-item"><img src="https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Espaco-Pet.webp" alt="Espaço Pet"><div class="caption">Espaço Pet</div></div>
+      <div class="lazzer-item"><img src="https://giojardins.com/wp-content/uploads/2023/06/GIO-Jardins-Lobby.webp" alt="Lobby"><div class="caption">Lobby</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLANTAS ============ -->
+<section id="plantas">
+  <div class="container center">
+    <div class="section-label">> Plantas</div>
+    <h2 class="section-title">A planta ideal para morar em qualquer metrópole do mundo</h2>
+
+    <div class="plant-card">
+      <h3>178m² | 3 Suítes | Planta do Decorado</h3>
+      <img src="https://www.mitreexclusivecollection.com.br/assets/img/giojardins/plantas/43.jpg" alt="Planta 178m² 3 suítes decorado">
+      <ul>
+        <li>Elevadores social e de serviços com controle de acesso</li>
+        <li>Hall social privativo</li>
+        <li>Living com caixilho piso-teto, integração com terraço</li>
+        <li>Banhos com ventilação e iluminação naturais</li>
+        <li>Gerador full atendendo 100% das unidades</li>
+        <li>Suítes com caixilhos amplos e persiana de enrolar</li>
+      </ul>
+    </div>
+
+    <div class="plant-card">
+      <h3>178m² | 2 Suítes com Master Ampliada</h3>
+      <img src="https://www.mitreexclusivecollection.com.br/assets/img/giojardins/plantas/42.jpg" alt="Planta 178m² 2 suítes">
+      <ul>
+        <li>Elevadores social e de serviços com controle de acesso</li>
+        <li>Hall social privativo</li>
+        <li>Living com caixilho piso-teto, integração com terraço</li>
+        <li>Banhos com ventilação e iluminação naturais</li>
+        <li>Gerador full atendendo 100% das unidades</li>
+      </ul>
+    </div>
+
+    <div class="plant-card">
+      <h3>276m² | 4 Suítes | Duplex</h3>
+      <img src="https://www.mitreexclusivecollection.com.br/assets/img/giojardins/plantas/44.jpg" alt="Planta 276m² 4 suítes">
+      <ul>
+        <li>Elevadores social e de serviços com controle de acesso</li>
+        <li>Hall social privativo</li>
+        <li>Living com caixilho piso-teto, integração com terraço</li>
+        <li>Banhos com ventilação e iluminação naturais</li>
+        <li>Gerador full atendendo 100% das unidades</li>
+        <li>Infraestrutura para ar-condicionado nas suítes, sala e terraço</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTATO ============ -->
+<section class="contact" id="contato">
+  <div class="container center">
+    <div class="section-label" style="color:#c9a86a;">> Contato</div>
+    <h2 class="section-title">Saiba mais sobre Gio Jardins</h2>
+	  
+	  <!-- Botão fixo de CTA -->
+<!-- Botão fixo de CTA com ícone do WhatsApp -->
+<a href="https://wa.me/5511964908616?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20o%20GIO%20Jardins" 
+   target="_blank" 
+   style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background-color: #F5F0E8; color: #6B4A2F; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; padding: 14px 32px; border-radius: 50px; border: 2px solid #6B4A2F; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.2s; display: flex; align-items: center; gap: 10px;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="#25D366">
+    <path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.6c1.7.9 3.7 1.4 5.7 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-4.9 1 1-4.8-.3-.4c-1-1.5-1.6-3.3-1.6-5.2 0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-9.8 10z"/>
+  </svg>
+  Saiba mais
+</a>
+
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+  <!-- footer
+    ================================================== -->
+    <footer class="s-footer footer">
+
+     
+
+<!--
+        <div class="row footer__top">
+
+            <div class="col-full footer__subscribe end">
+                <div class="subscribe-form">
+                    <form id="mc-form" class="group" novalidate="true">
+
+                        <input type="email" value="" name="EMAIL" class="email" id="mc-email" placeholder="Email Address" required="">
+            
+                        <input type="submit" name="subscribe" value="Sign Up">
+            
+                        <label for="mc-email" class="subscribe-message"></label>
+            
+                    </form>
+                </div>
+            </div>
+
+        </div>  
+-->
+<style>
+  
+  .footer__site-links ul {
+    list-style: none;
+}
+  
+ .footer__site-links ul a , .footer__contact  a{
+    line-height: 1;
+    text-decoration: none;
+    color: #fff;
+}
+      </style>
+        <div class="row footer__bottom" style="font-size: 15px;">
+
+   
+
+            <div class="col-five md-seven tab-full right end">
+                <div class="row">
+
+                    <div class="footer__site-links col-five mob-full">
+                        <h4>Site links.</h4>
+
+                     
+                           <li><a style="text-decoration: none;
+    color: #fff;" href="https://aurora.imb.br/politica.html" target="_blank" class="smoothscrollddd">Política de Privacidade</a></li>
+ <!--                           <li><a href="#download" class="smoothscroll">Download</a></li>
+-->
+<!--                            <li><a href="#0">Privacy Policy</a></li>-->
+                        </ul>
+                    </div>
+              </br>
+                    <div class="footer__contact col-seven mob-full">
+                        <h4>Contato.</h4>
+
+                        <p>
+							<a target="_blank" href="https://wa.me/5511964908616">Whatsapp (11)96490-8616</a>
+                       <br>
+                        
+                        </p></br>
+                        <p>
+                        Email: <br>
+                        <a href="mailto:aurora@aurora.imb.br" class="footer__mail-link">aurora@aurora.imb.br</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+</br>
+            <div class="col-full ss-copyright">
+                <span>© Grupo Aurora Imóveis (Lokkan Serviços Imobiliários - CNPJ 24713429000194)</span> 
+<!--                <span>Design by <a href="https://www.styleshout.com/">styleshout</a></span>-->
+            </div>
+
+        </div> <!-- end footer__bottom -->
+
+        <div class="go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top"></a>
+        </div>
+
+    </footer> <!-- end s-footer -->
+
+<script>
+  // Fecha o menu mobile ao clicar em um link
+  document.querySelectorAll('nav ul li a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('nav ul').classList.remove('open');
+    });
+  });
+
+  // Efeito de fade-in suave nas seções
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(sec => {
+    sec.style.opacity = 0;
+    sec.style.transform = 'translateY(30px)';
+    sec.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    observer.observe(sec);
+  });
+</script>
+<!-- Botão flutuante de WhatsApp -->
+<a href="https://wa.me/5511964908616?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20o%20GIO%20Jardins" 
+   target="_blank" 
+   style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; width: 60px; height: 60px; background-color: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="34" height="34" fill="#ffffff">
+    <path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.6c1.7.9 3.7 1.4 5.7 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-4.9 1 1-4.8-.3-.4c-1-1.5-1.6-3.3-1.6-5.2 0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-9.8 10z"/>
+  </svg>
+</a>
+</body>
+</html>

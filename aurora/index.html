@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" data-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <title>Aurora IA — Home com bloco de indicações</title>
+    <meta name="description" content="A Aurora conecta você ao mercado imobiliário de forma simples, transparente e digital.">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+    <style>
+/* Skip artifact shell — fixed styles served beside every artifact.
+   Complements basecoat; artifacts override --accent for their own identity. */
+:root {
+  color-scheme: light dark;
+  --accent: #2563eb;
+  --accent-contrast: #ffffff;
+  --accent-text: color-mix(in srgb, var(--accent) 72%, #000);
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --text: #14171f;
+  --text-muted: #5b6472;
+  --border: rgba(20, 23, 31, 0.10);
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(20, 23, 31, 0.08);
+  --space: 16px;
+}
+/* Theme resolution. Without data-theme the viewer's system preference decides,
+   as it always did. With it, the artifact's own choice wins in BOTH directions:
+   a page that hardcodes one palette must not be handed the opposite set of
+   tokens by the machine it happens to be opened on. The dark values appear
+   twice because a media query cannot be folded into a selector list.
+   The attribute sits inside :where() so these blocks keep the specificity of a
+   bare :root — the page's own <style> is linked after this file and must go on
+   overriding any token it wants, exactly as it could before. */
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    --accent-text: color-mix(in srgb, var(--accent) 78%, #fff);
+    --bg: #101318;
+    --surface: #181c23;
+    --text: #eef1f6;
+    --text-muted: #9aa4b2;
+    --border: rgba(238, 241, 246, 0.12);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+}
+:root:where([data-theme="dark"]) {
+  color-scheme: dark;
+  --accent-text: color-mix(in srgb, var(--accent) 78%, #fff);
+  --bg: #101318;
+  --surface: #181c23;
+  --text: #eef1f6;
+  --text-muted: #9aa4b2;
+  --border: rgba(238, 241, 246, 0.12);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+:root:where([data-theme="light"]) { color-scheme: light; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+
+.shell-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.shell-section { padding: calc(var(--space) * 2) 0; }
+.shell-grid { display: grid; gap: var(--space); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.shell-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: var(--space); }
+.shell-footer { padding: 24px 0 40px; color: var(--text-muted); font-size: 13px; }
+
+.shell-hero { padding: calc(var(--space) * 3) 0 calc(var(--space) * 2); }
+.shell-hero h1 { font-size: clamp(26px, 4vw, 40px); line-height: 1.15; margin: 0 0 10px; text-wrap: balance; }
+.shell-hero p { color: var(--text-muted); max-width: 60ch; margin: 0; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space);
+}
+
+.kpi { display: flex; flex-direction: column; gap: 4px; }
+.kpi .kpi-value { font-size: 28px; font-weight: 650; line-height: 1.1; }
+.kpi .kpi-label { font-size: 13px; color: var(--text-muted); }
+.kpi .kpi-delta { font-size: 12.5px; font-weight: 600; }
+.kpi .kpi-delta.up { color: #0a8f3c; }
+.kpi .kpi-delta.down { color: #cf3131; }
+
+table.shell-table { border-collapse: collapse; width: 100%; font-size: 14px; }
+table.shell-table th {
+  text-align: left; font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600;
+}
+table.shell-table th, table.shell-table td { padding: 9px 12px 9px 0; border-bottom: 1px solid var(--border); }
+table.shell-table td.num, table.shell-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+
+.chart-box { width: 100%; min-height: 220px; }
+.chart-box svg { width: 100%; height: auto; display: block; }
+
+.muted { color: var(--text-muted); }
+.accent { color: var(--accent-text); }
+.shell-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent-text);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shell-fade { animation: shell-fade 400ms ease both; }
+  @keyframes shell-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
+
+</style>
+    
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main2.css">
+    <script src="js/modernizr.js"></script>
+    <script src="js/pace.min.js"></script>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta property="og:title" content="Aurora IA" />
+    <meta property="og:description" content="A Aurora conecta você ao mercado imobiliário de forma simples, transparente e digital." />
+    <meta property="og:url" content="https://aurora.imb.br" />
+    <meta property="og:image" content="https://aurora.imb.br/images/og-image.jpg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1709549860471066');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1709549860471066&ev=PageView&noscript=1"
+/></noscript>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "Grupo Aurora Imóveis",
+      "alternateName": "Aurora",
+      "image": "https://aurora.imb.br/og-image.jpg",
+      "description": "A Aurora conecta você ao mercado imobiliário de forma simples, transparente e digital.",
+      "telephone": "+5511964908616",
+      "priceRange": "$$",
+      "areaServed": "Brasil",
+      "url": "https://aurora.imb.br",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "BR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/aurora.imb.br",
+        "https://www.facebook.com/aurora.imb.br"
+      ]
+    }
+    </script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18358347900');
+</script> 
+</head>
+<style>
+  .go-top a, .go-top a:visited {
+    display: none;
+  }
+  </style>
+<body id="top">
+    <div id="preloader" style="display: none;">
+        <div id="loader" class="dots-jump">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <header class="s-header">
+        <div class="row">
+            <div class="header-logo">
+                <a class="site-logo" href="https://aurora.imb.br/">
+                    <img src="images/logo.png" alt="Homepage">
+                </a>
+            </div>
+            <nav class="header-nav-wrap">
+                <ul class="header-main-nav"><li><a class="smoothscroll" href="#about" title="about">Como Funciona?</a></li>
+                    <li class="current"><a class="smoothscroll" href="#home" title="intro">Para Compradores</a></li>
+                    <li><a class="smoothscroll" href="#about-how" title="features">Para Construtoras</a></li>
+                    <li><a class="smoothscroll" href="#features" title="pricing">Para Corretores</a></li>
+                  <li><a class="smoothscrollXX" href="https://blog.aurora.imb.br/" target="_blank" title="pricing">Blog</a></li>
+                </ul>
+                <div class="header-cta">
+                    <a  target="_blank" href="https://wa.me/5511964908616?text=Ol%C3%A1%20Aurora%2C%20estou%20procurando%20im%C3%B3vel%2C%20pode%20me%20ajudar%3F" class="btn btn--primary header-cta__btn smoothscrollX abre">Buscar Imóveis Agora</a>
+                </div>
+            </nav>
+            <a class="header-menu-toggle" href="#"><span>Menu</span></a>
+        </div>
+    </header>
+    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="images/hero-bg.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=center>
+        <div class="shadow-overlay"></div>
+        <div class="home-content">
+            <div class="row home-content__main">
+                <div class="home-content__left">
+                    <h1 style="color: #4cdfd4;">
+                      O Poder de Escolha em Suas Mãos.</br><p><b style="color: #fff;"> A 1ª experiência imobiliária 100% digital, transparente e operada por Inteligência Artificial.</b>
+                    </p></h1>
+                    <h3>
+                    Unimos Compradores, construtoras e a elite dos corretores em um ecossistema inteligente para conectar você às melhores oportunidades, 24 horas 7 dias por semana. Tenha acesso ao maior catálogo de imóveis novos e em planta do Brasil, <b>são 9.932 empreendimentos</b> disponíveis diretamente no seu <b>WhatsApp, Instagram, Facebook.</b>
+                    </h3>
+                    <div class="home-content__btn-wrap">
+<a target="_blank" href="https://wa.me/5511964908616?text=Ol%C3%A1%20Aurora%2C%20estou%20procurando%20im%C3%B3vel%2C%20pode%20me%20ajudar%3F" class="btn btn--primary home-content__btn smoothscrollX">
+    Buscar Agora <img src="images/whats.png" style="width: 22px; position: relative; top: -1px; margin-left: 5px;">
+</a>
+                    </div>
+                </div>
+<style>
+  .btn--instagram,
+.btn--facebook {
+    color: #fff !important;
+    border: none !important;
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.btn--instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
+}
+.btn--facebook {
+    background: #1877F2 !important;
+}
+.btn--instagram:hover,
+.btn--facebook:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .25);
+}
+.btn__icon {
+    width: 22px;
+    height: 22px;
+    position: relative;
+    top: 5px;
+    margin-left: 6px;
+    fill: currentColor;
+}
+  .video_f{
+ position: absolute;
+    top: -4%;
+    left: 6%;
+    width: 88%;
+    height: 87%;
+    object-fit: cover;
+    border-radius: 20px;
+    z-index: 1;
+  } 
+ .img_video{position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  @media only screen and (max-width: 1200px) {
+  .video_f {
+    top: 5%!important;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .home-content__right   {
+    height: 774px !important;
+    }
+      .video_f {
+             width: 88%;
+        height: 99%;
+        top: 5% !important;
+    }
+   } 
+    @media only screen and (max-width: 500px) {
+    .home-content__right   {
+    height: 774px !important;
+    }
+      .video_f {
+   width: 88%;
+        height: 88%;
+        top: 5% !important;
+    }
+  }  
+    @media only screen and (max-width: 400px) {
+    .home-content__right   {
+    height: 774px !important;
+    }
+      .video_f {
+    top: 4%!important;
+        width: 88%;
+    height: 74%;
+    }
+  } 
+     @media only screen and (max-width: 350px) {
+    .home-content__right   {
+    height: 774px !important;
+    }
+      .video_f {
+        top: 4% !important;
+        width: 88%;
+    height: 69%;
+    }
+  } 
+          </style>
+                <div class="home-content__right">
+                    <video autoplay muted loop playsinline class="video_f">
+  <source src="video4.mp4" type="video/mp4" >
+</video>
+                  <img src="/images/hero-app-screens-8001.png" class="phone-frame"  class="img_video">
+                </div>
+            </div>
+        </div>
+        <a href="#about" class="home-scroll smoothscroll">
+            <span class="home-scroll__text">Scroll</span>
+            <span class="home-scroll__icon"></span>
+        </a> 
+    </section> <!-- end s-home -->
+
+    <!-- ===== NOVO BLOCO: PROGRAMA DE INDICAÇÃO ===== -->
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;700&family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+ <style>
+  .s-indicacao{background:#121619;padding:100px 0 96px;}
+  .s-indicacao .ind-head{text-align:center;max-width:720px;margin:0 auto;}
+  .s-indicacao .ind-eyebrow{font-family:'Nunito Sans',sans-serif;font-weight:800;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#4cdfd4;display:inline-flex;align-items:center;gap:12px;}
+  .s-indicacao .ind-eyebrow::before,.s-indicacao .ind-eyebrow::after{content:"";width:28px;height:2px;background:#4cdfd4;display:inline-block;}
+  .s-indicacao .ind-title{font-family:'Chivo',sans-serif;font-weight:600;font-size:4.6rem;line-height:1.2;letter-spacing:-0.03rem;color:#ffffff;margin:18px 0 0;}
+  .s-indicacao .ind-lead{font-family:'Nunito Sans',sans-serif;font-weight:400;font-size:2rem;line-height:1.6;color:rgba(255,255,255,0.7);margin:16px 0 0;}
+  .s-indicacao .ind-lead b{color:#ffffff;font-weight:700;}
+  .s-indicacao .ind-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px;margin-top:56px;}
+  .s-indicacao .ind-card{background:transparent;padding:28px 0 32px;border-top:1px solid rgba(255,255,255,0.1);}
+  .s-indicacao .ind-topo{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .s-indicacao .ind-num{display:inline-flex;align-items:center;gap:10px;font-family:'Chivo',sans-serif;font-weight:700;font-size:1.9rem;color:#4cdfd4;}
+  .s-indicacao .ind-num::before{content:"";width:10px;height:10px;border-radius:50%;background:#26aba1;display:inline-block;flex-shrink:0;}
+  .s-indicacao .ind-tag{font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:4px 12px;}
+  .s-indicacao .ind-card h3{font-family:'Chivo',sans-serif;font-weight:600;font-size:2.4rem;line-height:1.3;color:#ffffff;margin:14px 0 10px;}
+  .s-indicacao .ind-card p{font-family:'Nunito Sans',sans-serif;font-size:1.6rem;line-height:1.65;color:rgba(255,255,255,0.65);margin:0;}
+  .s-indicacao .ind-card p b{color:#4cdfd4;font-weight:700;}
+  .s-indicacao .ind-cta{text-align:center;margin-top:48px;}
+  .s-indicacao .ind-cta .btn{height:6.4rem;line-height:6rem;padding:0 32px;font-size:1.5rem;}
+  
+      @media only screen and (max-width:1200px){
+    .s-indicacao{padding:300px 0 60px;}
+    .s-indicacao .ind-title{font-size:3.6rem;}
+    .s-indicacao .ind-lead{font-size:1.8rem;}
+    .s-indicacao .ind-grid{grid-template-columns:1fr;margin-top:36px;}
+  }
+   @media only screen and (max-width:800px){
+    .s-indicacao{padding:290px 0 60px;}
+    .s-indicacao .ind-title{font-size:3.6rem;}
+    .s-indicacao .ind-lead{font-size:1.8rem;}
+    .s-indicacao .ind-grid{grid-template-columns:1fr;margin-top:36px;}
+  }
+   @media only screen and (max-width:600px){
+    .s-indicacao{padding:590px 0 60px;}
+    .s-indicacao .ind-title{font-size:3.6rem;}
+    .s-indicacao .ind-lead{font-size:1.8rem;}
+    .s-indicacao .ind-grid{grid-template-columns:1fr;margin-top:36px;}
+  }
+  @media only screen and (max-width:400px){
+    .s-indicacao{padding:500px 0 60px;}
+    .s-indicacao .ind-title{font-size:2.8rem;}
+  }
+</style>
+    <section id="indicacao" class="s-indicacao">
+        <div class="row">
+            <div class="ind-head">
+                <span class="ind-eyebrow">Programa de indicação</span>
+                <h2 class="ind-title">Indique e ganhe um bônus em dinheiro.</h2>
+                <p class="ind-lead">Comprador, corretor ou empreendimento: <b>qualquer pessoa pode participar</b>. São quatro formas de indicar — e um bônus em dinheiro em cada uma delas.</p>
+            </div>
+            <div class="ind-grid">
+                <div class="ind-card">
+                    <div class="ind-topo"><span class="ind-num">01</span><span class="ind-tag">desconto para o indicado</span></div>
+                    <h3>Desconto para quem compra</h3>
+                    <p>Se você é o comprador do imóvel, <b>você ganha 10% de desconto</b> da comissão da imobiliária na compra do imóvel.</p>
+                </div>
+                <div class="ind-card">
+                    <div class="ind-topo"><span class="ind-num">02</span><span class="ind-tag">renda por 1 ano</span></div>
+                    <h3>Ganho sobre indicação de comprador</h3>
+                    <p><b>Você ganha 10% da comissão</b> da imobiliária gerada pela compra do imóvel do indicado.</p>
+                </div>
+                <div class="ind-card">
+                    <div class="ind-topo"><span class="ind-num">03</span><span class="ind-tag">durante a campanha</span></div>
+                    <h3>Indicação de corretor</h3>
+                    <p><b>Você ganha 10% sobre todas as comissões</b> geradas pelo corretor indicado durante 1 ano.</p>
+                </div>
+                <div class="ind-card">
+                    <div class="ind-topo"><span class="ind-num">04</span><span class="ind-tag">bônus para quem indica</span></div>
+                    <h3>Indicação de empreendimento</h3>
+                    <p>Indicando um empreendimento com verba de marketing cooperada (construtora + Aurora), <b>você tem direito a 10% de todas as comissões</b> geradas durante a campanha.</p>
+                </div>
+            </div>
+            <div class="ind-cta">
+                <a target="_blank" href="/indicacao" class="btn btn--primary">Saiba como indicar</a>
+            </div>
+        </div>
+    </section>
+    <!-- ===== FIM DO NOVO BLOCO ===== -->
+
+    <section id="about" class="s-about target-section">
+        <div class="row section-header has-bottom-sep" data-aos="">
+            <div class="col-full">
+                <h1 class="display-1">
+                    Para Compradores
+                </h1>
+                <p class="lead">
+                    O Jogo Virou: O Mercado Inteiro no Seu Canal Favorito. Você não precisa mais depender de corretores de imóveis, pular de site em site ou baixar novos aplicativos.
+                </p>
+            </div>
+        </div>
+<div class="row features block-1-2 block-m-1-2">
+   <div class="col-block item-feature" data-aos="">
+    <div class="item-feature__icon">
+    </div>
+    <div class="item-feature__text">
+        <h3 class="item-title">Transparência Radical (A Chave do Cofre é Sua)</h3>
+        <p>Acesse imediatamente todas as informações dos empreendimentos, preços e localizações detalhadas. A informação é sua.
+</p>
+    </div>
+</div>
+<div class="col-block item-feature" data-aos="">
+    <div class="item-feature__icon">
+    </div>  
+    <div class="item-feature__text">
+        <h3 class="item-title">Zero Spam e Total Privacidade</h3>
+        <p>Chega de ruído e da velha "pressão para comprar". Navegue, compare opções, saiba o preço no seu tempo e ritmo, sem receber ligações indesejadas.
+</p>
+    </div>
+</div>
+<div class="col-block item-feature" data-aos="">
+    <div class="item-feature__icon">
+    </div>
+    <div class="item-feature__text">
+        <h3 class="item-title">Inteligência Artificial a Seu Favor</h3>
+        <p>Faça as perguntas que desejar e receba análises precisas em milissegundos.
+</p>
+    </div>
+</div>
+<div class="col-block item-feature" data-aos="">
+    <div class="item-feature__icon">
+    </div>
+    <div class="item-feature__text">
+        <h3 class="item-title">Você Define Quando Falar com um Humano</h3>
+        <p>Somente quando você estiver pronto para visitar o imóvel ou negociar uma proposta, você convoca nosso especialista humano. E o melhor: ele já recebe todo o histórico da conversa e chega preparado para fechar negócio, sem você precisar repetir nada.
+</p>
+    </div>
+</div>
+		</div> <!-- end features --></br></br>
+    </section> <!-- end s-about -->
+    <section id="about-how" class="s-about-how">
+        <div class="row process-wrap">
+            <h2 style="padding-top: 106px;" class="display-2 text-center" data-aos="">Para Construtoras</h2>
+			<p class="lead" style="text-align: center;">
+                   O Novo Padrão de Distribuição Imobiliária. Seu estoque é conectado instantaneamente aos maiores canais do mundo, operado por IA e fechado pela elite do mercado.
+Benefícios:
+                </p>
+            <div class="process" data-aos="">
+                <div class="process__steps block-1-2 block-tab-full group">
+                    <div class="col-block step">
+                        <h3 class="item-title">Vença o Desafio dos 5 Minutos (O Limite Humano)</h3>
+                        <p>Construtoras investem fortunas em tráfego, mas o tempo destrói o ROI. Nossa IA acaba com o custo invisível do lead desperdiçado, atendendo clientes 24/7 em milissegundos. Nós não dormimos para que você não perca dinheiro.
+                        </p> 
+                    </div>
+                    <div class="col-block step">
+                        <h3 class="item-title">O Fim da Triagem Manual</h3>
+                        <p> A IA atua como um concierge de alto padrão. Ela dialoga como um humano para extrair perfil, orçamento e momento de compra, entregando apenas o <b>Lead Quente</b> para a equipe.
+                        </p> 
+                    </div>
+                    <div class="col-block step">
+                        <h3 class="item-title">Fechamento Pela Elite (Não entregamos seu produto para amadores)</h3>
+                        <p>Abandonamos a roleta de leads aleatórios. Para receber os clientes do seu empreendimento, nossos especialistas parceiros passam por uma imersão técnica rigorosa, exigindo <b>Nota de Corte mínima de 8.0</b> para certificação.
+                        </p> 
+                    </div>
+                    <div class="col-block step">
+                        <h3 class="item-title">Alinhamento Total de Interesses (Risco Zero)</h3>
+                        <p>Sem barreiras de entrada ou taxas ocultas de setup. Nós ganhamos juntos, exclusivamente no sucesso do fechamento. O nosso ecossistema financia a própria operação através de resultados reais.
+                        </p> 
+                    </div>  
+                </div> <!-- end process__steps -->
+           </div> <!-- end process -->
+        </div> <!-- end about-how -->
+	   <div class="home-content__btn-wrap" style="text-align: center">
+                        <a  target="_blank" href="https://wa.me/5511984276697" class="btn btn--primary home-content__btn smoothscrollX">
+                           Integre seu estoque hoje 
+                        </a>
+                    </div>
+    </section> <!-- end s-about-how -->
+    <section id="features" class="s-features target-section">
+        <div class="row section-header has-bottom-sep" data-aos="">
+            <div class="col-full">
+                <h1 class="display-1">
+                    Para Corretores
+                </h1>
+                <p class="lead">
+                    Desbloqueie Sua Velocidade Máxima. A primeira plataforma imobiliária 100% digital operada por IA. O fim do trabalho braçal: trabalhe menos e venda muito mais.
+                </p>
+            </div>
+        </div>
+        <div class="row features block-1-2 block-m-1-2">
+            <div class="col-block item-feature" data-aos="">
+                <div class="item-feature__icon">
+                </div>
+                <div class="item-feature__text">
+                    <h3 class="item-title">Maior comissão "até 70%" em home office</h3>
+                    <p>Esqueça as horas perdidas no trânsito triando leads frios. A IA faz o trabalho pesado e você atua 100% Home Office, focado apenas no fechamento. Seu trabalho duro finalmente tem a recompensa que merece.
+                    </p>
+                </div>
+            </div>
+            <div class="col-block item-feature" data-aos="">
+                <div class="item-feature__icon">
+                </div>
+                <div class="item-feature__text">
+                    <h3 class="item-title">O Motor de Qualificação Omnichannel</h3>
+                    <p>O lead bruto entra via WhatsApp, Facebook, Instagram ou Messenger. A IA faz a triagem profunda e transfere para você APENAS o cliente pronto para agendar a visita e assinar o contrato. Maior conversão, zero frustração.
+                </div>
+            </div>
+            <div class="col-block item-feature" data-aos="">
+                <div class="item-feature__icon">
+                </div>
+                <div class="item-feature__text">
+                    <h3 class="item-title">A Jornada da Elite (Leads Blindados)</h3>
+                    <p>Escolha seu produto exclusivo, estude nosso material e faça a Avaliação Técnica. Sendo certificado (Nota 8.0+), você recebe 100% dos leads exclusivos daquele lançamento de forma blindada.
+                    </p>
+                </div>
+            </div>
+            <div class="col-block item-feature" data-aos="">
+                <div class="item-feature__icon">
+                </div>
+                <div class="item-feature__text">
+                    <h3 class="item-title">O Novo Ecossistema Financeiro</h3>
+                    <p>Deixe de ser apenas um vendedor ativo e crie renda passiva. Ganhe 10% da comissão líquida da Aurora sobre todas as vendas de colegas que você indicar, ou sobre o VGV total de novas Construtoras que você trouxer para a plataforma (durante 1 ano).
+                    </p>
+                </div>
+            </div>
+        </div> <!-- end features -->
+     			   <div class="home-content__btn-wrap" style="text-align: center">
+			    <p class="lead" style="text-align: center;font-size: 24px;">
+                   Acesse todas as informações
+                </p>
+                        <a  href="https://aurora.imb.br/corretores" class="btn btn--primary home-content__btn smoothscrollX">
+                            Área para corretores 
+                        </a>
+                    </div>
+    </section> <!-- end s-features -->
+    <footer class="s-footer footer">
+        <div class="row section-header align-center">
+            <div class="col-full">
+                <h1 class="display-1">
+                    O Futuro das Vendas Não Espera. É Agora.
+                </h1>
+                <p class="lead">
+                O imóvel dos seus sonhos (ou a sua velocidade máxima de vendas) está a uma mensagem de distância. Mande um 'Oi' nas nossas redes para acessar o ecossistema agora mesmo.
+                </p>
+            </div>
+        </div>
+        <div class="row footer__bottom">
+            <div class="footer__about col-five tab-full left">
+                <h4>Sobre a Aurora</h4>
+                <p>
+                Servindo compradores, construtoras, incorporadoras e corretores.
+                </p>
+                <ul class="footer__social">
+					<li><a target="_blank" href="http://instagram.com/aurora_imb_br/"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a target="_blank" href="https://www.facebook.com/aurora.imb.ia"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                    <li><a target="_blank" href="https://www.youtube.com/@aurora_imb_br"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>
+                    <li style="   position: relative;
+    top: 7px;"><a target="_blank" href="https://www.tiktok.com/@aurora.imb.br"><svg style="width: 25px; margin-top: 5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="white">
+  <path d="M544.5 273.9C500.5 274 457.5 260.3 421.7 234.7L421.7 413.4C421.7 446.5 411.6 478.8 392.7 506C373.8 533.2 347.1 554 316.1 565.6C285.1 577.2 251.3 579.1 219.2 570.9C187.1 562.7 158.3 545 136.5 520.1C114.7 495.2 101.2 464.1 97.5 431.2C93.8 398.3 100.4 365.1 116.1 336C131.8 306.9 156.1 283.3 185.7 268.3C215.3 253.3 248.6 247.8 281.4 252.3L281.4 342.2C266.4 337.5 250.3 337.6 235.4 342.6C220.5 347.6 207.5 357.2 198.4 369.9C189.3 382.6 184.4 398 184.5 413.8C184.6 429.6 189.7 444.8 199 457.5C208.3 470.2 221.4 479.6 236.4 484.4C251.4 489.2 267.5 489.2 282.4 484.3C297.3 479.4 310.4 469.9 319.6 457.2C328.8 444.5 333.8 429.1 333.8 413.4L333.8 64L421.8 64C421.7 71.4 422.4 78.9 423.7 86.2C426.8 102.5 433.1 118.1 442.4 131.9C451.7 145.7 463.7 157.5 477.6 166.5C497.5 179.6 520.8 186.6 544.6 186.6L544.6 274z"/>
+</svg>
+</a></li>
+                </ul>
+            </div>
+            <div class="col-five md-seven tab-full right end">
+                <div class="row">
+                    <div class="footer__site-links col-five mob-full">
+                        <h4>Site links.</h4>
+                        <ul class="footer__site-links"><li><a href="#about" class="smoothscroll">Como Funciona</a></li>
+                            <li><a href="#home" class="smoothscroll">Para Compradores</a></li>
+                            <li><a href="#about-how" class="smoothscroll">Para Construtoras</a></li>
+                            <li><a href="#features" class="smoothscroll">Para Corretores</a></li>
+                          <li><a href="https://blog.aurora.imb.br/" target="_blank" class="smoothscrollddd">Blog</a></li>
+                           <li><a href="https://aurora.imb.br/politica.html" target="_blank" class="smoothscrollddd">Política de Privacidade</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer__contact col-seven mob-full">
+                        <h4>Contato.</h4>
+                        <p>
+							<a target="_blank" href="https://wa.me/5511964908616">Whatsapp (11)96490-8616</a>
+                       <br>
+                        </p>
+                        <p>
+                        Email: <br>
+                        <a href="mailto:aurora@aurora.imb.br" class="footer__mail-link">aurora@aurora.imb.br</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-full ss-copyright">
+                <span>© Grupo Aurora Imóveis (Lokkan Serviços Imobiliários - CNPJ 24713429000194 - CRECI 028810-J)</span> 
+            </div>
+        </div> <!-- end footer__bottom -->
+        <div class="go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top"></a>
+        </div>
+    </footer> <!-- end s-footer -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+<script>
+/* Skip artifact shell — fixed helpers served beside every artifact. */
+(function () {
+  "use strict";
+
+  var fmt = {
+    num: function (v, opts) { return new Intl.NumberFormat("pt-BR", opts || {}).format(v); },
+    brl: function (v) { return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v); },
+    pct: function (v) { return new Intl.NumberFormat("pt-BR", { style: "percent", maximumFractionDigits: 1 }).format(v); }
+  };
+
+  // axisFmt keeps axis tick labels short (compact notation) so long values
+  // (e.g. full BRL amounts) never clip against the plot edge.
+  function axisFmt(v) {
+    return fmt.num(v, { notation: "compact", maximumFractionDigits: 1 });
+  }
+
+  // format accepts a function OR one of the fmt names ("num" | "brl" | "pct").
+  function coerceFormat(spec) {
+    if (typeof spec === "function") return spec;
+    if (typeof spec === "string" && fmt[spec]) return fmt[spec];
+    return function (v) { return fmt.num(v); };
+  }
+
+  function accent() {
+    return getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#2563eb";
+  }
+  function mutedColor() {
+    return getComputedStyle(document.documentElement).getPropertyValue("--text-muted").trim() || "#5b6472";
+  }
+  function svgEl(tag, attrs) {
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    return el;
+  }
+  function frame(el, w, h) {
+    var svg = svgEl("svg", { viewBox: "0 0 " + w + " " + h, role: "img" });
+    el.innerHTML = "";
+    el.appendChild(svg);
+    return svg;
+  }
+
+  // maxOf guards the axis scale: empty values would give -Infinity (truthy,
+  // so "|| 1" can't catch it) and a non-positive max would flip the chart.
+  function maxOf(values) {
+    var m = values.length ? Math.max.apply(null, values) : 0;
+    return m > 0 ? m : 1;
+  }
+
+  // bar(el, {labels:[], values:[], color?, format?}) — vertical bar chart.
+  function bar(el, cfg) {
+    var W = 640, H = 280, padL = 46, padB = 30, padT = 12;
+    var svg = frame(el, W, H);
+    var max = maxOf(cfg.values);
+    var n = cfg.values.length;
+    var plotW = W - padL - 12, plotH = H - padT - padB;
+    var step = plotW / n, bw = Math.min(step * 0.62, 64);
+    var color = cfg.color || accent();
+    var f = coerceFormat(cfg.format);
+    for (var g = 0; g <= 4; g++) {
+      var gy = padT + plotH - (plotH * g) / 4;
+      svg.appendChild(svgEl("line", { x1: padL, y1: gy, x2: W - 12, y2: gy, stroke: "currentColor", "stroke-opacity": 0.08 }));
+      var lbl = svgEl("text", { x: padL - 8, y: gy + 4, "text-anchor": "end", "font-size": 10, fill: mutedColor() });
+      lbl.textContent = axisFmt((max * g) / 4);
+      svg.appendChild(lbl);
+    }
+    cfg.values.forEach(function (v, i) {
+      var bh = Math.max(0, (v / max) * plotH);
+      var x = padL + i * step + (step - bw) / 2;
+      var y = padT + plotH - bh;
+      var r = svgEl("rect", { x: x, y: y, width: bw, height: bh, rx: 4, fill: color });
+      var t = svgEl("title", {});
+      t.textContent = cfg.labels[i] + ": " + f(v);
+      r.appendChild(t);
+      svg.appendChild(r);
+      var tx = svgEl("text", { x: x + bw / 2, y: H - 10, "text-anchor": "middle", "font-size": 11, fill: mutedColor() });
+      tx.textContent = cfg.labels[i];
+      svg.appendChild(tx);
+    });
+  }
+
+  // line(el, {labels:[], values:[], color?, format?}) — single-series line.
+  function line(el, cfg) {
+    var W = 640, H = 280, padL = 46, padB = 30, padT = 12;
+    var svg = frame(el, W, H);
+    var max = maxOf(cfg.values);
+    var n = cfg.values.length;
+    var plotW = W - padL - 16, plotH = H - padT - padB;
+    var color = cfg.color || accent();
+    var f = coerceFormat(cfg.format);
+    for (var g = 0; g <= 4; g++) {
+      var gy = padT + plotH - (plotH * g) / 4;
+      svg.appendChild(svgEl("line", { x1: padL, y1: gy, x2: W - 16, y2: gy, stroke: "currentColor", "stroke-opacity": 0.08 }));
+      var lbl = svgEl("text", { x: padL - 8, y: gy + 4, "text-anchor": "end", "font-size": 10, fill: mutedColor() });
+      lbl.textContent = axisFmt((max * g) / 4);
+      svg.appendChild(lbl);
+    }
+    var pts = cfg.values.map(function (v, i) {
+      var x = padL + (n === 1 ? plotW / 2 : (plotW * i) / (n - 1));
+      var y = padT + plotH - (v / max) * plotH;
+      return [x, y];
+    });
+    var d = pts.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1); }).join(" ");
+    svg.appendChild(svgEl("path", { d: d, fill: "none", stroke: color, "stroke-width": 2, "stroke-linejoin": "round" }));
+    pts.forEach(function (p, i) {
+      var c = svgEl("circle", { cx: p[0], cy: p[1], r: 3.5, fill: color });
+      var t = svgEl("title", {});
+      t.textContent = cfg.labels[i] + ": " + f(cfg.values[i]);
+      c.appendChild(t);
+      svg.appendChild(c);
+      var tx = svgEl("text", { x: p[0], y: H - 10, "text-anchor": "middle", "font-size": 11, fill: mutedColor() });
+      tx.textContent = cfg.labels[i];
+      svg.appendChild(tx);
+    });
+  }
+
+  // donut(el, {labels:[], values:[], colors?}) — donut with center total.
+  function donut(el, cfg) {
+    var W = 320, H = 280, cx = W / 2, cy = H / 2, R = 92, r = 58;
+    var svg = frame(el, W, H);
+    var total = cfg.values.reduce(function (a, b) { return a + b; }, 0) || 1;
+    var palette = cfg.colors || [accent(), "#1baf7a", "#eda100", "#e34948", "#4a3aa7", "#e87ba4"];
+    var a0 = -Math.PI / 2;
+    cfg.values.forEach(function (v, i) {
+      var a1 = a0 + (v / total) * Math.PI * 2;
+      var large = a1 - a0 > Math.PI ? 1 : 0;
+      var p = ["M", cx + R * Math.cos(a0), cy + R * Math.sin(a0),
+        "A", R, R, 0, large, 1, cx + R * Math.cos(a1), cy + R * Math.sin(a1),
+        "L", cx + r * Math.cos(a1), cy + r * Math.sin(a1),
+        "A", r, r, 0, large, 0, cx + r * Math.cos(a0), cy + r * Math.sin(a0), "Z"].join(" ");
+      var path = svgEl("path", { d: p, fill: palette[i % palette.length] });
+      var t = svgEl("title", {});
+      t.textContent = cfg.labels[i] + ": " + fmt.num(v) + " (" + fmt.pct(v / total) + ")";
+      path.appendChild(t);
+      svg.appendChild(path);
+      a0 = a1;
+    });
+    var center = svgEl("text", { x: cx, y: cy + 5, "text-anchor": "middle", "font-size": 20, "font-weight": 650, fill: "currentColor" });
+    center.textContent = fmt.num(total);
+    svg.appendChild(center);
+  }
+
+  window.skipShell = { fmt: fmt };
+  window.skipChart = { bar: bar, line: line, donut: donut };
+})();
+
+</script>
+</body>
+</html>
