@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+<title>Resultados — Residencial Silverstone</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:#1a1a2e; --ink-light:#4a4a6a; --bg:#f7f6f2; --white:#fff;
+    --accent:#c8954a; --accent-light:#f5ede0;
+    --success:#2d8a6e; --success-bg:#e8f6f2;
+    --danger:#c0392b; --danger-bg:#fdecea;
+    --border:#e2e0d8;
+  }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; padding:32px 16px; }
+  .wrap { max-width:900px; margin:0 auto; }
+  .header { margin-bottom:32px; }
+  .brand-tag { display:inline-block; font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); background:var(--accent-light); padding:4px 12px; border-radius:20px; margin-bottom:10px; }
+  .header h1 { font-size:26px; font-weight:800; letter-spacing:-.4px; margin-bottom:4px; }
+  .header p { font-size:14px; color:var(--ink-light); }
+
+  .stats { display:flex; gap:12px; margin-bottom:28px; flex-wrap:wrap; }
+  .stat-card { flex:1; min-width:120px; background:var(--white); border-radius:14px; padding:18px 20px; box-shadow:0 2px 12px rgba(26,26,46,.07); }
+  .stat-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-light); margin-bottom:6px; }
+  .stat-val { font-size:28px; font-weight:800; }
+  .stat-val.green { color:var(--success); } .stat-val.red { color:var(--danger); } .stat-val.gold { color:var(--accent); }
+
+  .actions { display:flex; gap:10px; margin-bottom:28px; flex-wrap:wrap; align-items:center; }
+  .search-wrap { flex:1; min-width:200px; }
+  .search-wrap input { width:100%; padding:11px 14px; border:2px solid var(--border); border-radius:10px; font-size:14px; font-family:'Inter',sans-serif; color:var(--ink); background:var(--white); outline:none; transition:border-color .2s; }
+  .search-wrap input:focus { border-color:var(--accent); }
+  .btn { padding:11px 20px; border-radius:10px; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; cursor:pointer; border:none; transition:opacity .2s,transform .1s; }
+  .btn:active { transform:scale(.97); }
+  .btn-primary { background:var(--ink); color:#fff; }
+  .btn-outline { background:transparent; border:2px solid var(--border); color:var(--ink-light); }
+  .btn-outline:hover { border-color:var(--ink-light); }
+
+  .section { margin-bottom:36px; }
+  .section-title { display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; }
+  .pill { padding:3px 10px; border-radius:20px; font-size:12px; }
+  .pill-green { background:var(--success-bg); color:var(--success); }
+  .pill-red   { background:var(--danger-bg);  color:var(--danger);  }
+
+  .table-wrap { background:var(--white); border-radius:16px; overflow:hidden; box-shadow:0 2px 12px rgba(26,26,46,.07); }
+  table { width:100%; border-collapse:collapse; }
+  thead th { padding:12px 16px; text-align:left; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-light); background:var(--bg); border-bottom:1px solid var(--border); }
+  tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
+  tbody tr:last-child { border-bottom:none; }
+  tbody tr:hover { background:var(--bg); }
+  tbody td { padding:12px 16px; font-size:14px; }
+  .td-tel { font-weight:600; white-space:nowrap; }
+  .td-email { color:var(--ink-light); font-size:13px; }
+  .td-nota { font-weight:700; }
+  .td-nota.green { color:var(--success); } .td-nota.red { color:var(--danger); }
+  .td-data { color:var(--ink-light); font-size:13px; white-space:nowrap; }
+  .td-tent { color:var(--ink-light); font-size:13px; text-align:center; }
+
+  .btn-del { background:none; border:none; cursor:pointer; color:#222; font-size:24px; padding:4px 8px; border-radius:6px; transition:color .2s,background .2s; line-height:1; }
+  .btn-del:hover { color:var(--danger); background:var(--danger-bg); }
+
+  .empty { padding:32px; text-align:center; color:var(--ink-light); font-size:14px; }
+  .loading { text-align:center; padding:48px; color:var(--ink-light); font-size:15px; }
+  .update-info { font-size:12px; color:var(--ink-light); margin-top:20px; }
+  @media(max-width:600px){ thead th:nth-child(5),tbody td:nth-child(5),thead th:nth-child(6),tbody td:nth-child(6){display:none} }
+  
+  .back_but{
+    text-decoration: none;
+    bottom: 16px;
+    position: relative;
+    font-weight: bold;
+    color: #474747;
+    
+  }
+    .back_but:hover{
+
+    color: #838080;
+    
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back_but" href="https://aurora.imb.br/corretores/avaliacoes/resultados/">< TODOS RESULTADOS </a>
+  <div class="header">
+    
+    <div class="brand-tag">Integra Urbano</div>
+    <h1>Residencial Silverstone — Resultados</h1>
+    <p>Painel de acompanhamento das avaliações de corretores</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card"><div class="stat-label">Total de corretores</div><div class="stat-val gold" id="st-total">—</div></div>
+    <div class="stat-card"><div class="stat-label">Aprovados</div><div class="stat-val green" id="st-aprov">—</div></div>
+    <div class="stat-card"><div class="stat-label">Reprovados</div><div class="stat-val red" id="st-reprov">—</div></div>
+    <div class="stat-card"><div class="stat-label">Taxa de aprovação</div><div class="stat-val gold" id="st-pct">—</div></div>
+  </div>
+
+  <div class="actions">
+    <div class="search-wrap">
+      <input type="text" id="busca" placeholder="Buscar por nome, WhatsApp ou e-mail…" oninput="filtrar()">
+    </div>
+    <button class="btn btn-outline" onclick="carregar()">↻ Atualizar</button>
+    <button class="btn btn-primary" onclick="exportarTxt()">⬇ Exportar TXT</button>
+  </div>
+
+  <div id="conteudo"><div class="loading">Carregando resultados…</div></div>
+  <div class="update-info" id="update-info"></div>
+</div>
+
+<script>
+let todos = [];
+
+async function carregar() {
+  document.getElementById('conteudo').innerHTML = '<div class="loading">Carregando…</div>';
+  try {
+    const res = await fetch('../salvar.php?acao=listar&nocache=' + Date.now());
+    if (!res.ok) throw new Error();
+    todos = await res.json();
+    todos.sort((a,b) => parseData(b.data) - parseData(a.data));
+    atualizarStats();
+    renderizar(todos);
+    document.getElementById('update-info').textContent = 'Última atualização: ' + new Date().toLocaleString('pt-BR');
+  } catch(e) {
+    document.getElementById('conteudo').innerHTML = '<div class="loading">Erro ao carregar. Verifique se o salvar.php está acessível.</div>';
+  }
+}
+
+function parseData(str) {
+  try {
+    const [d, m, y, H, i] = str.replace(' ',' ').split(/[\/\s:]/);
+    return new Date(y, m-1, d, H, i).getTime();
+  } catch { return 0; }
+}
+
+function atualizarStats() {
+  const aprov  = todos.filter(r => r.status === 'APROVADO').length;
+  const reprov = todos.filter(r => r.status === 'REPROVADO').length;
+  const total  = todos.length;
+  const pct    = total > 0 ? Math.round((aprov/total)*100) : 0;
+  document.getElementById('st-total').textContent  = total;
+  document.getElementById('st-aprov').textContent  = aprov;
+  document.getElementById('st-reprov').textContent = reprov;
+  document.getElementById('st-pct').textContent    = pct + '%';
+}
+
+function filtrar() {
+  const q = document.getElementById('busca').value.toLowerCase();
+  renderizar(q ? todos.filter(r =>
+    r.nome.toLowerCase().includes(q) ||
+    r.tel.includes(q) ||
+    (r.email || '').toLowerCase().includes(q)
+  ) : todos);
+}
+
+function renderizar(lista) {
+  const aprovados  = lista.filter(r => r.status === 'APROVADO');
+  const reprovados = lista.filter(r => r.status === 'REPROVADO');
+  document.getElementById('conteudo').innerHTML =
+    secaoHtml('✓ Aprovados',  aprovados,  'pill-green', 'green') +
+    secaoHtml('✗ Reprovados', reprovados, 'pill-red',   'red');
+}
+
+function secaoHtml(titulo, lista, pillClass, corClass) {
+  let html = `<div class="section">
+    <div class="section-title">${titulo}<span class="pill ${pillClass}">${lista.length}</span></div>
+    <div class="table-wrap">`;
+
+  if (!lista.length) {
+    html += `<div class="empty">Nenhum registro nesta categoria.</div>`;
+  } else {
+    html += `<table><thead><tr>
+      <th>WhatsApp</th><th>Nome</th><th>E-mail</th><th>Nota</th><th>Tentativas</th><th>Data</th><th></th>
+    </tr></thead><tbody>`;
+    lista.forEach(r => {
+      const telKey = r.tel.replace(/\D/g,'');
+      html += `<tr>
+        <td class="td-tel">${esc(r.tel)}</td>
+        <td>${esc(r.nome)}</td>
+        <td class="td-email">${esc(r.email || '—')}</td>
+        <td class="td-nota ${corClass}">${esc(r.acertos)}/${esc(r.total)}</td>
+        <td class="td-tent">${r.tentativas || 1}</td>
+        <td class="td-data">${esc(r.data)}</td>
+        <td><button class="btn-del" onclick="apagarRegistro('${telKey}','${esc(r.nome)}')" title="Apagar registro">🗑</button></td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  }
+  return html + `</div></div>`;
+}
+
+async function apagarRegistro(tel, nome) {
+  if (!confirm(`Apagar o registro de ${nome}?\n\nIsso também remove o bloqueio, permitindo que ele faça a prova novamente.`)) return;
+  try {
+    const res = await fetch(`../salvar.php?acao=apagar&tel=${tel}`);
+    const json = await res.json();
+    if (json.ok) carregar();
+    else alert('Erro ao apagar registro.');
+  } catch(e) { alert('Erro de conexão.'); }
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function exportarTxt() {
+  const aprov  = todos.filter(r => r.status === 'APROVADO');
+  const reprov = todos.filter(r => r.status === 'REPROVADO');
+  const fmt    = r => `${r.tel} | ${r.nome} | ${r.email || '—'} | ${r.acertos}/${r.total} | ${r.status} | Tentativas: ${r.tentativas||1} | ${r.data}`;
+  const blob = new Blob([
+    'RESIDENCIAL SILVERSTONE — RESULTADOS DE AVALIAÇÃO\n' +
+    'Gerado em: ' + new Date().toLocaleString('pt-BR') + '\n\n' +
+    '=== APROVADOS (' + aprov.length + ') ===\n' + (aprov.map(fmt).join('\n') || 'Nenhum') +
+    '\n\n=== REPROVADOS (' + reprov.length + ') ===\n' + (reprov.map(fmt).join('\n') || 'Nenhum')
+  ], { type:'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'resultados-silverstone.txt';
+  a.click();
+}
+
+carregar();
+</script>
+</body>
+</html>
