@@ -3905,7 +3905,7 @@ html.no-csstransitions .home-content__main {
  * ------------------------------------------------------------------- */
 .footer__social {
   list-style: none;
-  margin: -1.6rem 0 0 0;
+  margin: 0.4rem 0 0 0;
 }
 
 .footer__social li {
