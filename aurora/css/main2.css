@@ -2178,7 +2178,8 @@ input::-moz-focus-inner {
  * ## home button section
  * ------------------------------------------------------------------- */
 .home-content__btn-wrap {
-  margin-top: 7.2rem;
+  margin-top: 2.2rem;
+	margin-bottom: 30px;
 }
 
 .home-content__btn-wrap .home-content__btn {
@@ -2815,7 +2816,7 @@ html.no-csstransitions .home-content__main {
  *
  * ------------------------------------------------------------------- */
 .s-about-how {
-  background-color: #ffffff;
+  background-color: #eaeaea;
   padding-bottom: 6rem;
 }
 
@@ -3202,7 +3203,7 @@ html.no-csstransitions .home-content__main {
 .s-features {
   padding-top: 8.2rem;
   padding-bottom: 6rem;
-  background-color: #eaeaea;
+  background-color: #fff;
   overflow: hidden;
   position: relative;
 }
