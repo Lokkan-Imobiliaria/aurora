@@ -2985,7 +2985,7 @@ html.no-csstransitions .home-content__main {
   text-align: center;
   border-radius: 50%;
   background-color: #D9414E;
-  box-shadow: 0 0 0 15px #ffffff;
+ box-shadow: 0 0 0 7px #ffffff7d;
   z-index: 500;
   position: absolute;
   top: -12px;
